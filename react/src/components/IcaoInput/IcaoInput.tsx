@@ -1,7 +1,12 @@
+import { Box, Button, TextField } from "@mui/material";
+
 function IcaoInput() {
   return (
     <>
-      <h2>Icao Input</h2>
+      <Box component="form">
+        <TextField id="filled-basic" label="required" variant="filled" />
+        <Button  variant="contained" type="submit">Submit</Button>
+      </Box>
     </>
   );
 }
