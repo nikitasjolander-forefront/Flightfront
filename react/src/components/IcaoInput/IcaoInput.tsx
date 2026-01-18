@@ -1,12 +1,18 @@
 import { Box, Button, TextField } from "@mui/material";
 import type React from "react";
+import { useState } from "react";
 
 function IcaoInput() {
-  const handleSubmit =(e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log("submited");
-  }
+  const [icao, setIcao] = useState("");
 
+  const handelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIcao(e.target.value);
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log(icao);
+  };
 
   return (
     <>
@@ -19,7 +25,13 @@ function IcaoInput() {
         }}
         onSubmit={handleSubmit}
       >
-        <TextField id="icao-input" label="ICAO" variant="outlined" fullWidth />
+        <TextField
+          id="icao-input"
+          label="ICAO"
+          variant="outlined"
+          fullWidth
+          onChange={handelChange}
+        />
         <Button
           variant="contained"
           type="submit"
