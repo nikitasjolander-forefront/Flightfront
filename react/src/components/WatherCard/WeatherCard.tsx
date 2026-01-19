@@ -7,7 +7,6 @@ import {
   Stack,
 } from "@mui/material";
 import "../../assets/weather-icons/css/weather-icons.min.css";
-import { grey } from "@mui/material/colors";
 
 const location = "Arlanda";
 const time = "13:00";
@@ -39,19 +38,32 @@ function WeatherRow({ label, value }: WeatherRowProps) {
 function WeatherCard() {
   return (
     <>
-      <Card variant="outlined" sx={{ maxWidth: 700, p: 2 }}>
+      <Card variant="outlined" sx={{ p: 2 }}>
         <CardHeader title={`Weather at ${location}`} />
-        <CardContent sx={{ display: "flex", p: 0 }}>
-          <Box sx={{ justifyContent: "space-between", alignItems: "center", p: 2, fontSize: 64 }}>
-            <i className="wi wi-rain"></i>
+        <CardContent>
+          <Box sx={{ display: "flex", p: 0 }}>
+            <Box
+              sx={{
+                justifyContent: "space-between",
+                alignItems: "center",
+                p: 2,
+                fontSize: 150,
+              }}
+            >
+              <i className="wi wi-rain"></i>
+            </Box>
+            <Stack direction="column" width="100%">
+              <WeatherRow label="Time" value={time} />
+              <WeatherRow label="Wind" value={wind} />
+              <WeatherRow label="Visibility" value={visibility} />
+              <WeatherRow label="Temperature" value={temperature} />
+              <WeatherRow label="QNH" value={qnh} />
+              <Box display="flex" alignItems="center" p={2} gap={1}>
+                <Typography fontWeight="bold">METAR:</Typography>
+                <Typography>{metar}</Typography>
+              </Box>
+            </Stack>
           </Box>
-          <Stack direction="column" width="100%">
-            <WeatherRow label="Time" value={time} />
-            <WeatherRow label="Wind" value={wind} />
-            <WeatherRow label="Visibility" value={visibility} />
-            <WeatherRow label="Temperature" value={temperature} />
-            <WeatherRow label="QNH" value={qnh} />
-          </Stack>
         </CardContent>
       </Card>
     </>
