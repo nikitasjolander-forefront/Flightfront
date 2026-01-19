@@ -12,6 +12,8 @@ function IcaoInput() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(icao);
+    setIcao("");
+    //TODO: send to backend
   };
 
   return (
@@ -30,6 +32,7 @@ function IcaoInput() {
           label="ICAO"
           variant="outlined"
           fullWidth
+          value={icao}
           onChange={handelChange}
         />
         <Button
