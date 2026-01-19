@@ -12,6 +12,10 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddHttpClient<ICheckWxService, CheckWxService>(client =>
 {
     var config = builder.Configuration.GetSection("CheckWxApi");
+
+    if (string.IsNullOrEmpty(config["ApiKey"]))
+        throw new InvalidOperationException("CheckWx API key is missing.");
+
     client.BaseAddress = new Uri(config["BaseUrl"]!);
     client.DefaultRequestHeaders.Add("X-API-Key", config["ApiKey"]);
 });

@@ -17,9 +17,9 @@ public class MetarController : ControllerBase
     [HttpGet("{icaoCode}")]
     public async Task<IActionResult> GetMetar(string icaoCode, CancellationToken cancellationToken)
     {
-        if (string.IsNullOrWhiteSpace(icaoCode) || icaoCode.Length != 4)
+        if (string.IsNullOrWhiteSpace(icaoCode) || icaoCode.Length != 4 || !icaoCode.All(char.IsLetter))
         {
-            return BadRequest("Invalid ICAO code. Must be 4 characters.");
+            return BadRequest("Invalid ICAO code. Must be 4 letters.");
         }
 
         var metar = await _checkWxService.GetMetarAsync(icaoCode, cancellationToken);
