@@ -1,5 +1,5 @@
-using FlightFront.Application.Services;
 using Microsoft.AspNetCore.Mvc;
+using Flightfront.Core.Interfaces;
 
 namespace FlightFront.API.Controllers;
 
@@ -14,10 +14,10 @@ public class MetarController : ControllerBase
         _checkWxService = checkWxService;
     }
 
-    [HttpGet("{icaoCode}")]
-    public async Task<IActionResult> GetMetar(string icaoCode, CancellationToken cancellationToken)
+    [HttpGet("{icaoCode}/decoded")]
+    public async Task<IActionResult> GetMetarDecoded(string icaoCode, CancellationToken cancellationToken)
     {
-        if (string.IsNullOrWhiteSpace(icaoCode) || icaoCode.Length != 4 || !icaoCode.All(char.IsLetter))
+        if (!IsValidIcaoCode(icaoCode))
         {
             return BadRequest("Invalid ICAO code. Must be 4 letters.");
         }
@@ -31,4 +31,25 @@ public class MetarController : ControllerBase
 
         return Ok(metar);
     }
+
+    [HttpGet("{icaoCode}")]
+    public async Task<IActionResult> GetMetar(string icaoCode, CancellationToken cancellationToken)
+    {
+        if (!IsValidIcaoCode(icaoCode))
+        {
+            return BadRequest("Invalid ICAO code. Must be 4 letters.");
+        }
+
+        var metar = await _checkWxService.GetMetar(icaoCode, cancellationToken);
+
+        if (metar is null)
+        {
+            return NotFound($"No METAR found for {icaoCode}");
+        }
+
+        return Ok(metar);
+    }
+
+    private static bool IsValidIcaoCode(string icaoCode) =>
+        !string.IsNullOrWhiteSpace(icaoCode) && icaoCode.Length == 4 && icaoCode.All(char.IsLetter);
 }

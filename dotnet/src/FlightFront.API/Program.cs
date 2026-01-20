@@ -1,4 +1,4 @@
-using FlightFront.Application.Services;
+using Flightfront.ExternalData;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,16 +9,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Configure CheckWX HttpClient
-builder.Services.AddHttpClient<ICheckWxService, CheckWxService>(client =>
-{
-    var config = builder.Configuration.GetSection("CheckWxApi");
-
-    if (string.IsNullOrEmpty(config["ApiKey"]))
-        throw new InvalidOperationException("CheckWx API key is missing.");
-
-    client.BaseAddress = new Uri(config["BaseUrl"]!);
-    client.DefaultRequestHeaders.Add("X-API-Key", config["ApiKey"]);
-});
+builder.Services.AddExternalDataServices(builder.Configuration);
 
 var app = builder.Build();
 

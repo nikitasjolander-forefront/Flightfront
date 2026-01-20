@@ -1,5 +1,6 @@
 <Solution>
   <Folder Name="/src/">
+    <Project Path="Flightfront.ExternalData/Flightfront.ExternalData.csproj" Id="beb8f5ac-c399-4617-b1ab-67b119630338" />
     <Project Path="src/FlightFront.API/FlightFront.API.csproj" Id="da97353f-a7a3-42b9-817d-8241c827978d" />
     <Project Path="src/FlightFront.Application/FlightFront.Application.csproj" Id="3996e796-d8c2-448b-8b7b-4641bf524b68" />
     <Project Path="src/FlightFront.Core/FlightFront.Core.csproj" Id="5a176189-e74c-4b73-8efc-39e9a86f7788" />
