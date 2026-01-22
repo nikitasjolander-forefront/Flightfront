@@ -7,11 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FlightFront.Core\FlightFront.Core.csproj" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="10.0.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Services\" />
+    <ProjectReference Include="..\src\FlightFront.Core\FlightFront.Core.csproj" />
   </ItemGroup>
 
 </Project>
