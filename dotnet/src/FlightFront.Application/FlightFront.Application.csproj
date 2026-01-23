@@ -10,8 +10,4 @@
     <ProjectReference Include="..\FlightFront.Core\FlightFront.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Services\" />
-  </ItemGroup>
-
 </Project>
