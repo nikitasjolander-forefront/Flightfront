@@ -2,28 +2,29 @@ import { Box, Button, TextField } from "@mui/material";
 import type React from "react";
 import { useEffect, useState } from "react";
 
-interface IcaoProps {
-  onSubmit: (params: { type: string; value: string }) => void;
-  icaoRaw: string;
+interface MetarProps {
+  metarRaw: string;
+  onSubmit: (params: {type: string, value: string}) => void; 
 }
 
-function IcaoInput({icaoRaw, onSubmit }: IcaoProps) {
-  const [icao, setIcao] = useState("");
-
-  const handelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIcao(e.target.value);
-  };
+export function MetarField({ metarRaw, onSubmit }: MetarProps) {
+  const [metar, setMetar] = useState(metarRaw);
 
   useEffect(() => {
-    setIcao(icaoRaw);
-  }, [icaoRaw]);
+    setMetar(metarRaw)
+  }, [metarRaw]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setMetar(e.target.value);
+    console.log(e, "send to backend");
+  };
+
+const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit({ type: "icao", value: icao });
-
+    onSubmit({type: 'metar', value: metar});
     //TODO: send to backend
   };
+
 
   return (
     <>
@@ -34,14 +35,14 @@ function IcaoInput({icaoRaw, onSubmit }: IcaoProps) {
           alignItems: "strech",
           gap: 2,
         }}
-        onSubmit={handleSubmit}
+        onSubmit = { handleSubmit }
       >
         <TextField
-          id="icao-input"
-          label="ICAO"
+          id="metar-input"
+          label="METAR"
           variant="outlined"
           fullWidth
-          value={icao}
+          value={metar}
           onChange={handelChange}
         />
         <Button
@@ -55,5 +56,3 @@ function IcaoInput({icaoRaw, onSubmit }: IcaoProps) {
     </>
   );
 }
-
-export default IcaoInput;
