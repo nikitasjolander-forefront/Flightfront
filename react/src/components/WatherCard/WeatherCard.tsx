@@ -7,18 +7,22 @@ import {
   Stack,
 } from "@mui/material";
 import "../../assets/weather-icons/css/weather-icons.min.css";
+import type { Weather } from "../../services/weatherServices";
 
-const location = "Arlanda";
-const time = "13:00";
-const wind = "strong";
-const visibility = "semi";
-const temperature = "23 deg";
-const qnh = "wtf";
-const metar = "112 CB12 2323 CC NE12";
+// const location = "Arlanda";
+// const time = "13:00";
+// const wind = "strong";
+// const visibility = "semi";
+// const temperature = "23 deg";
+// const qnh = "wtf";
 
 interface WeatherRowProps {
   label: string;
-  value: string;
+  value: string | number;
+}
+
+interface WeatherProps {
+  weather: Weather;
 }
 
 function WeatherRow({ label, value }: WeatherRowProps) {
@@ -35,11 +39,11 @@ function WeatherRow({ label, value }: WeatherRowProps) {
   );
 }
 
-function WeatherCard() {
+export function WeatherCard({weather}: WeatherProps) {
   return (
     <>
       <Card variant="outlined" sx={{ p: 2 }}>
-        <CardHeader title={`Weather at ${location}`} />
+        <CardHeader title={`Weather at ${weather.location}`} />
         <CardContent>
           <Box sx={{ display: "flex", p: 0 }}>
             <Box
@@ -53,15 +57,12 @@ function WeatherCard() {
               <i className="wi wi-rain"></i>
             </Box>
             <Stack direction="column" width="100%">
-              <WeatherRow label="Time" value={time} />
-              <WeatherRow label="Wind" value={wind} />
-              <WeatherRow label="Visibility" value={visibility} />
-              <WeatherRow label="Temperature" value={temperature} />
-              <WeatherRow label="QNH" value={qnh} />
-              <Box display="flex" alignItems="center" p={2} gap={1}>
-                <Typography fontWeight="bold">METAR:</Typography>
-                <Typography>{metar}</Typography>
-              </Box>
+              {/*TODO: only show if exist*/}
+              <WeatherRow label="Time" value={`${weather.time.day} ${weather.time.time}`} />
+              <WeatherRow label="Wind" value={`Direction ${weather.wind.direction} and speed ${weather.wind.speed} knot`}/>
+              <WeatherRow label="Visibility" value={weather.visibility} />
+              <WeatherRow label="Temperature" value={weather.temperature} />
+              <WeatherRow label="QNH" value={weather.qnh} />
             </Stack>
           </Box>
         </CardContent>
@@ -69,5 +70,3 @@ function WeatherCard() {
     </>
   );
 }
-
-export default WeatherCard;
