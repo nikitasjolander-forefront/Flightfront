@@ -21,7 +21,11 @@ public static class DependencyInjection
             client.BaseAddress = new Uri(config["BaseUrl"]!);
             client.DefaultRequestHeaders.Add("X-API-Key", config["ApiKey"]);
         });
+
         return services;
+
+
+
     }
 
 }

@@ -8,4 +8,7 @@
     <Project Path="src/FlightFront.Infrastructure.Tests/FlightFront.Infrastructure.Tests.csproj" Id="c2e7556f-a0b4-4036-a15f-ac646a9f7b84" />
     <Project Path="src/FlightFront.Infrastructure/FlightFront.Infrastructure.csproj" Id="b3951f49-068a-45a5-becb-ad49eda53c0b" />
   </Folder>
+  <Folder Name="/test/">
+    <Project Path="FlightFront.Application.Tests/FlightFront.Application.Tests.csproj" Id="bee4f69a-bad4-4e02-b16d-2b4caf88f6ac" />
+  </Folder>
 </Solution>
