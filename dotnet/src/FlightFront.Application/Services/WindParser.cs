@@ -1,8 +1,10 @@
-﻿namespace FlightFront.Application.Services;
+﻿using FlightFront.Core.Interfaces;
 
-using Flightfront.Core.Interfaces;
+namespace FlightFront.Application.Services;
 
-internal class WindDecoder : IDecoder
+
+
+public class WindParser : IParser
 {
     private const string DirectionRegexPattern = @"^([0-9]{3}|VRB|///)";
     private const string SpeedRegexPattern = "P?([/0-9]{2,3}|//)";
@@ -11,7 +13,7 @@ internal class WindDecoder : IDecoder
     private const string DirectionVariationsRegexPattern = "( ([0-9]{3})V([0-9]{3}))?"; // optional
 
 
-    public Object TryParse(string[] substringTokens)
+    public object TryParse(string[] substringTokens)
     {
         if (substringTokens.Empty())
             return null;   
@@ -22,15 +24,16 @@ internal class WindDecoder : IDecoder
             var match = Regex.Match(token, $"^{DirectionRegexPattern}{SpeedRegexPattern}{SpeedVariationsRegexPattern}{UnitRegexPattern}{DirectionVariationsRegexPattern}$", RegexOptions.IgnoreCase);
             if (match.Success)
             {
-                var direction = match.Groups[1].Value;
+                var direction = match.Groups[1].Value.Replace("///", null).Replace("VRB", "");
                 var speed = match.Groups[2].Value;
-                var gust = match.Groups[4].Success ? match.Groups[4].Value : null;
+                var gust = match.Groups[4].Success ? match.Groups[4].Value.Replace("G", "") : null; 
                 var unit = match.Groups[5].Value;
                 var varFrom = match.Groups[7].Success ? match.Groups[7].Value : null;
-                var varTo = match.Groups[8].Success ? match.Groups[8].Value : null;
-                return new
+                var varTo = match.Groups[8].Success ? match.Groups[8].Value.Replace("V", "") : null;
+                return new Wind
                 {
                     Direction = direction,
+                    IsVariable = direction == "VRB",
                     Speed = speed,
                     Gust = gust,
                     Unit = unit,
@@ -41,6 +44,16 @@ internal class WindDecoder : IDecoder
 
         }
 
+    }
+
+    public ParsedMetarBuilder ApplyParsedData(ParsedMetarBuilder builder, string[] substringTokens)
+    {
+        var wind = TryParse(substringTokens) as Wind;
+        if (wind != null)
+        {
+            builder.SetWind(wind);
+        }
+        return builder;
     }
 
 }

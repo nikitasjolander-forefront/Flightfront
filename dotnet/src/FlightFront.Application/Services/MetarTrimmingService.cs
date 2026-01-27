@@ -1,4 +1,6 @@
-﻿namespace FlightFront.Application.Services;
+﻿using FlightFront.Core.Models;
+
+namespace FlightFront.Application.Services;
 
 public class MetarTrimmingService
 {
@@ -18,7 +20,7 @@ public class MetarTrimmingService
     }
 
 
-    public MetarTrimmingService(string metar)
+    public List<MetarToken> TrimAndCleanMetar(string metar)
     {
         if (string.IsNullOrWhiteSpace(metar))
             return Array.Empty();
@@ -49,17 +51,25 @@ public class MetarTrimmingService
 
         foreach (var str in substrings)
         {
-            tokens.Add(new MetarToken(Classify(str), str));
+            tokens.Add(new MetarToken(Classify(str), str)); 
         }
 
-        return tokens;
+        /*
+            // Classify all tokens - LINQ-variant av ovan
+            var classifiedTokens = substrings
+                .Select(str => new MetarToken(Classify(str), str))
+                .ToList();
+        */
+
+        return GroupConsecutiveTokens(tokens);
     }
 
 
     private static TokenType Classify(string token)
     {
-        if (IcaoRegex.IsMatch(token))
 
+
+        if (IcaoRegex.IsMatch(token))
             return TokenType.Icao;
 
         if (TimeRegex.IsMatch(token))
@@ -87,22 +97,38 @@ public class MetarTrimmingService
     }
 
 
+    private static List<MetarToken> GroupConsecutiveTokens(List<MetarToken> tokens)
+    {
+        if (tokens.Count == 0)
+            return tokens;
 
+        var grouped = new List<MetarToken>();
+        var currentType = tokens[0].Type;
+        var currentTexts = new List<string> { tokens[0].RawText };
 
-public readonly record struct MetarToken(TokenType Type, string Value);
+        // Check from the second token onwards
+        for (int i = 1; i < tokens.Count; i++)
+        {
+            if (tokens[i].Type == currentType)
+            {
+                // Same type - add to current group
+                currentTexts.Add(tokens[i].RawText);
+            }
+            else
+            {
+                // Different type - save current group and start new one
+                grouped.Add(new MetarToken(currentType, string.Join(" ", currentTexts)));
+                currentType = tokens[i].Type;
+                currentTexts = new List<string> { tokens[i].RawText };
+            }
+        }
 
-public enum TokenType
-{
-    Icao,
-    ObservationTime,
-    Wind,
-    Visibility,
-    Weather,
-    Clouds,
-    TemperatureDewpoint,
-    Altimeter,
-    Other
-}
+        // Add the last group
+        grouped.Add(new MetarToken(currentType, string.Join(" ", currentTexts)));
+
+        return grouped;
+    }
+
 
 
 

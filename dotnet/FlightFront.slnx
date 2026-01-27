@@ -6,4 +6,7 @@
     <Project Path="src/FlightFront.Core/FlightFront.Core.csproj" Id="5a176189-e74c-4b73-8efc-39e9a86f7788" />
     <Project Path="src/FlightFront.Infrastructure/FlightFront.Infrastructure.csproj" Id="b3951f49-068a-45a5-becb-ad49eda53c0b" />
   </Folder>
+  <Folder Name="/test/">
+    <Project Path="FlightFront.Application.Tests/FlightFront.Application.Tests.csproj" Id="bee4f69a-bad4-4e02-b16d-2b4caf88f6ac" />
+  </Folder>
 </Solution>
