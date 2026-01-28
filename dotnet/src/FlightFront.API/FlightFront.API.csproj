@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="CsvHelper" Version="33.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="10.1.0" />
   </ItemGroup>
@@ -16,6 +17,7 @@
     <ProjectReference Include="..\..\Flightfront.ExternalData\Flightfront.ExternalData.csproj" />
     <ProjectReference Include="..\FlightFront.Application\FlightFront.Application.csproj" />
     <ProjectReference Include="..\FlightFront.Core\FlightFront.Core.csproj" />
+    <ProjectReference Include="..\FlightFront.Infrastructure\FlightFront.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,5 +1,6 @@
 using Flightfront.ExternalData;
-
+using FlightFront.Core.Interfaces;
+using FlightFront.Infrastructure.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -10,6 +11,8 @@ builder.Services.AddSwaggerGen();
 
 // Configure CheckWX HttpClient
 builder.Services.AddExternalDataServices(builder.Configuration);
+builder.Services.AddSingleton<IAirportSearchService>(sp =>
+    new AirportSearchService(Path.Combine(AppContext.BaseDirectory, "Data", "airports.csv")));
 
 var app = builder.Build();
 

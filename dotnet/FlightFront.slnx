@@ -1,9 +1,14 @@
 <Solution>
   <Folder Name="/src/">
+    <File Path="airports.csv" />
     <Project Path="Flightfront.ExternalData/Flightfront.ExternalData.csproj" Id="beb8f5ac-c399-4617-b1ab-67b119630338" />
     <Project Path="src/FlightFront.API/FlightFront.API.csproj" Id="da97353f-a7a3-42b9-817d-8241c827978d" />
     <Project Path="src/FlightFront.Application/FlightFront.Application.csproj" Id="3996e796-d8c2-448b-8b7b-4641bf524b68" />
     <Project Path="src/FlightFront.Core/FlightFront.Core.csproj" Id="5a176189-e74c-4b73-8efc-39e9a86f7788" />
+    <Project Path="src/FlightFront.Infrastructure.Tests/FlightFront.Infrastructure.Tests.csproj" Id="c2e7556f-a0b4-4036-a15f-ac646a9f7b84" />
     <Project Path="src/FlightFront.Infrastructure/FlightFront.Infrastructure.csproj" Id="b3951f49-068a-45a5-becb-ad49eda53c0b" />
+  </Folder>
+  <Folder Name="/test/">
+    <Project Path="FlightFront.Application.Tests/FlightFront.Application.Tests.csproj" Id="bee4f69a-bad4-4e02-b16d-2b4caf88f6ac" />
   </Folder>
 </Solution>
