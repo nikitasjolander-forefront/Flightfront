@@ -8,8 +8,9 @@ public class MetarParserService
 
     private readonly MetarTrimmingService _trimmingService;
     private readonly List<IParser> _parsers;
+	private readonly Dictionary<TokenType, IParser> _parserMap;
 
-    public MetarParserService(MetarTrimmingService trimmingService)
+	public MetarParserService(MetarTrimmingService trimmingService)
     {
         _trimmingService = trimmingService;
 
@@ -19,7 +20,7 @@ public class MetarParserService
         {
             { TokenType.Wind, new WindParser() },
             // { TokenType.Visibility, new VisibilityParser() },
-            // { TokenType.Weather, new WeatherParser() },
+             { TokenType.Weather, new WeatherParser() },
             // { TokenType.Clouds, new CloudsParser() },
             // { TokenType.TemperatureDewpoint, new TemperatureDewpointParser() },
             // { TokenType.Altimeter, new AltimeterParser() },
@@ -61,8 +62,8 @@ public class MetarParserService
                          break;
                     
                      case TokenType.Weather:
-                    //     parsedMetar.Weather = (Weather)result;
-                         break;
+						parsedMetar.Weather.Add((Weather)result);
+						break;
                     
                     case TokenType.Clouds:
                     //     parsedMetar.Clouds = (Cloud)result;
