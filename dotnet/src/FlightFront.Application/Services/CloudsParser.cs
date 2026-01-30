@@ -59,7 +59,7 @@ public class CloudsParser : IParser
         return clouds.Count > 0 ? clouds : null;
     }
 
-    public ParsedMetarBuilder ApplyParsedData(ParsedMetarBuilder builder, string[] substringTokens)
+    public void ApplyParsedData(ParsedMetarBuilder builder, string[] substringTokens)
     {
         var clouds = TryParse(substringTokens) as List<Clouds>;
         if (clouds != null)
@@ -69,7 +69,6 @@ public class CloudsParser : IParser
                 builder.SetClouds(cloud);
             }
         }
-        return builder;
     }
 
     public string CloudTypeConverter(CloudType cloudType)
