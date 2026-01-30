@@ -5,12 +5,11 @@ public class ParsedMetarBuilder
     private string Icao { get; set; } = string.Empty;
     private DateTime? ObservationTime { get; set; }
     private Wind? Wind { get; set; }
-    private Visibility? Visibility { get; set; }
-    private List<Weather> Weather { get; set; } = new();   // Enskilda objekt med lista?
-    private List<Clouds> Clouds { get; set; } = new();   // Enskilda objekt med lista?
-    private Temperature? Temperature { get; set; }
-    //private Altimeter? Altimeter { get; set; }   // Ta bort?
-    private List<string> ParseErrors { get; set; } = new();
+   // private Visibility? Visibility { get; set; }
+  //  private Weather Weather { get; set; } = new();   // Enskilda objekt med lista?
+  //  private Clouds Clouds { get; set; } = new();   // Enskilda objekt med lista?
+   // private Temperature? Temperature { get; set; }
+    private List<string> ParseErrors { get; set; } = new();  // Ha kvar?
 
     public ParsedMetar Build()
     {
@@ -19,12 +18,11 @@ public class ParsedMetarBuilder
             Icao = Icao,
             ObservationTime = ObservationTime,
             Wind = Wind,
-            Visibility = Visibility,
-            Weather = Weather,
-            Clouds = Clouds,
-            Temperature = Temperature,
-            // Altimeter = Altimeter,
-            ParseErrors = ParseErrors
+           // Visibility = Visibility,
+           // Weather = Weather,
+           // Clouds = Clouds,
+           // Temperature = Temperature,
+            ParseErrors = ParseErrors   //  Ha kvar?
         };
     }
 
@@ -47,41 +45,46 @@ public class ParsedMetarBuilder
         return this;
     }
 
+/*
     public ParsedMetarBuilder SetVisibility(Visibility visibility)
     {
         Visibility = visibility;
         return this;
     }
+*/
 
-    public ParsedMetarBuilder AddWeather(Weather weather)
+/*    public ParsedMetarBuilder AddWeather(Weather weather)
     {
         Weather.Add(weather);
         return this;
     }
+*/
 
+/*
     public ParsedMetarBuilder AddCloud(Clouds clouds)
     {
         Clouds.Add(clouds);
         return this;
     }
+*/
 
+/*
     public ParsedMetarBuilder SetTemperature(Temperature temperature)
     {
         Temperature = temperature;
         return this;
     }
+*/
 
-    /*    public ParsedMetarBuilder SetAltimeter(Altimeter altimeter)
-        {
-            Altimeter = altimeter;
-            return this;
-        } */
+/*
 
     public ParsedMetarBuilder AddParseError(string error)
     {
         ParseErrors.Add(error);
         return this;
     }
+*/
+
 
 
 }

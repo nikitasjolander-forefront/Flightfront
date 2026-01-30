@@ -17,8 +17,8 @@ public class MetarParserService
         _parserMap = new Dictionary<TokenType, IParser>
         {
             { TokenType.Wind, new WindParser() },
-            { TokenType.Visibility, new VisibilityParser() },
-            { TokenType.Weather, new WeatherParser() }/*,
+            /*{ TokenType.Visibility, new VisibilityParser() },
+            { TokenType.Weather, new WeatherParser() },
             { TokenType.Clouds, new CloudsParser() },
             { TokenType.TemperatureDewpoint, new TemperatureParser() },
             { TokenType.Altimeter, new AltimeterParser() }*/            

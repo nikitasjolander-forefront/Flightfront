@@ -22,9 +22,14 @@ public class WindParserTests
 
         var result = _sut.TryParse(new string[] { metar }) as Wind;
 
-        Assert.Pass()
-
-        Assert.Pass(result.Direction == 330 && result.Speed == 17 && result.Gust == 23 && result.Unit == "KT");
+        Assert.That(result, Is.Not.Null);
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.Direction, Is.EqualTo(330));
+            Assert.That(result.Speed, Is.EqualTo(17));
+            Assert.That(result.Gust, Is.EqualTo(23));
+            Assert.That(result.Unit, Is.EqualTo("KT"));
+        });
     }
 
         public void Test2()
@@ -33,6 +38,13 @@ public class WindParserTests
 
         var result = _sut.TryParse(new string[] { metar }) as Wind;
 
-        Assert.Pass(result.direction == "100" && result.speed == "09" && result.gust == null && result.unit == "KT");
+                Assert.That(result, Is.Not.Null);
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.Direction, Is.EqualTo(100));
+            Assert.That(result.Speed, Is.EqualTo(9));
+            Assert.That(result.Gust, Is.Null);
+            Assert.That(result.Unit, Is.EqualTo("KT"));
+        });
     }
 }

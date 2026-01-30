@@ -37,4 +37,5 @@ public class CheckWxService : ICheckWxService
 
         return response?.Data?.FirstOrDefault();
     }
+
 }
