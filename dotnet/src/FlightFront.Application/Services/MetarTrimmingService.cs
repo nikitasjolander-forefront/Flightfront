@@ -119,7 +119,7 @@ public class MetarTrimmingService
             else
             {
                 // Different type - save current group and start new one
-                grouped.Add(new MetarToken(currentType, currentTexts.ToArray()));
+                grouped.Add(new MetarToken(currentType, [.. currentTexts]));
                 currentType = tokens[i].Type;
                 currentTexts = new List<string>(tokens[i].substringTokens);
             }
