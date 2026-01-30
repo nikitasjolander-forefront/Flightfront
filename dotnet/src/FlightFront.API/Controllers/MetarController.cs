@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Flightfront.Core.Interfaces;
 using FlightFront.Application.Services;
-using FlightFront.Application.Mapping;
+using FlightFront.API.Mapping;
 
 namespace FlightFront.API.Controllers;
 
@@ -33,7 +33,7 @@ public class MetarController : ControllerBase
             return NotFound($"Could not parse METAR: {metarCode}");
         }
 
-       return Ok(parsedMetar); // Ändra till DTO
+        return Ok(parsedMetar.ToDto());
     }
 
 

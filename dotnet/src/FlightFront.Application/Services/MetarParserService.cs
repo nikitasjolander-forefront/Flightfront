@@ -28,6 +28,9 @@ public class MetarParserService
 
     public ParsedMetar Parse(string metarString)
     {
+        if (string.IsNullOrWhiteSpace(metarString))
+            return null;
+
         // Step 1: Get classified and grouped tokens
         var tokens = _trimmingService.TrimAndCleanMetar(metarString);
 
