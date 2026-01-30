@@ -6,7 +6,7 @@ public enum TokenType
     Visibility,
     Weather,
     Clouds,
-    TemperatureDewpoint,
-    Altimeter,
+    Temperature,
+    AirPressure,
     Other
 }

@@ -9,6 +9,7 @@ public class ParsedMetarBuilder
   //  private Weather Weather { get; set; } = new();   // Enskilda objekt med lista?
     private Clouds? Clouds { get; set; }   // Enskilda objekt med lista?
    // private Temperature? Temperature { get; set; }
+   // private AirPressure? AirPressure { get; set; }
     private List<string> ParseErrors { get; set; } = new(); 
 
     public ParsedMetar Build()
@@ -75,14 +76,20 @@ public class ParsedMetarBuilder
             return this;
         }
     */
-
-    
-
-        public ParsedMetarBuilder AddParseError(string error)
+   
+    /*
+    public ParsedMetarBuilder SetAirPressure(AirPressure airPressure)
         {
-            ParseErrors.Add(error);
+            AirPressure = airPressure;
             return this;
         }
+    */
+
+    public ParsedMetarBuilder AddParseError(string error)
+    {
+        ParseErrors.Add(error);
+        return this;
+    }
     
 
 

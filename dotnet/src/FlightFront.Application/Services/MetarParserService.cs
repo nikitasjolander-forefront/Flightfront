@@ -14,10 +14,19 @@ public class MetarParserService
         { TokenType.Wind, new WindParser() },
         { TokenType.Icao, new IcaoParser() },
         { TokenType.ObservationTime, new ObservationTimeParser()},
-        //{ TokenType.Visibility, new VisibilityParser() },
-        //{ TokenType.Weather, new WeatherParser() },
+<<<<<<< HEAD
+        { TokenType.Visibility, new VisibilityParser() },
+        { TokenType.Weather, new WeatherParser() },
         { TokenType.Clouds, new CloudsParser() },
-        //{ TokenType.Temperature, new TemperatureParser() }         
+        { TokenType.Temperature, new TemperatureParser(),
+        { TokenType.AirPressure, new AirPressureParser() }         
+=======
+       // { TokenType.Visibility, new VisibilityParser() },
+       // { TokenType.Weather, new WeatherParser() },
+       // { TokenType.Clouds, new CloudsParser() },
+       // { TokenType.Temperature, new TemperatureParser() }*/         
+        // { TokenType.AirPressure, new AirPressureParser() }
+>>>>>>> d021fad (Ändrat Altimeter till AirPressure)
     };
 
     public MetarParserService(MetarTrimmingService trimmingService)
@@ -28,6 +37,9 @@ public class MetarParserService
 
     public ParsedMetar Parse(string metarString)
     {
+        if (string.IsNullOrWhiteSpace(metarString))
+            return null;
+
         // Step 1: Get classified and grouped tokens
         var tokens = _trimmingService.TrimAndCleanMetar(metarString);
 

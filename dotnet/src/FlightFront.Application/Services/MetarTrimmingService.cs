@@ -12,8 +12,8 @@ public class MetarTrimmingService
     private static readonly Regex VisibilityRegex = new(@"^\d+(SM|KM|M)?$", RegexOptions.Compiled | RegexOptions.IgnoreCase);      // TODO: NDV can be added seperately after this
     private static readonly Regex WeatherRegex = new(@"^(-|\+)?(VC)?(MI|PR|BC|DR|BL|SH|TS|FZ)?(DZ|RA|SN|SG|IC|PL|GR|GS|UP|BR|FG|FU|VA|DU|SA|HZ|PY|PO|SQ|FC|SS|DS)+$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
     private static readonly Regex CloudRegex = new(@"^(FEW|SCT|BKN|OVC|NSC)\d{3}([A-Z]{2,3})?$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-    private static readonly Regex TempDewRegex = new(@"^M?\d{2}/M?\d{2}$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-    private static readonly Regex AltimeterRegex = new(@"^A\d{4}$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+    private static readonly Regex TemperatureRegex = new(@"^M?\d{2}/M?\d{2}$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+    private static readonly Regex AirPressureRegex = new(@"^A\d{4}$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
     public MetarTrimmingService()
     {
@@ -89,11 +89,11 @@ public class MetarTrimmingService
         if (CloudRegex.IsMatch(token))
             return TokenType.Clouds;
 
-        if (TempDewRegex.IsMatch(token))
-            return TokenType.TemperatureDewpoint;
+        if (TemperatureRegex.IsMatch(token))
+            return TokenType.Temperature;
 
-        if (AltimeterRegex.IsMatch(token))
-            return TokenType.Altimeter;
+        if (AirPressureRegex.IsMatch(token))
+            return TokenType.AirPressure;
 
         return TokenType.Other;
     }
@@ -119,7 +119,7 @@ public class MetarTrimmingService
             else
             {
                 // Different type - save current group and start new one
-                grouped.Add(new MetarToken(currentType, currentTexts.ToArray()));
+                grouped.Add(new MetarToken(currentType, [.. currentTexts]));
                 currentType = tokens[i].Type;
                 currentTexts = new List<string>(tokens[i].substringTokens);
             }
