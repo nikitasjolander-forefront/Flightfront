@@ -1,4 +1,5 @@
 ﻿using FlightFront.Core.Models;
+using System.Text.RegularExpressions;
 
 namespace FlightFront.Application.Services;
 
@@ -23,17 +24,28 @@ public class MetarTrimmingService
     public List<MetarToken> TrimAndCleanMetar(string metar)
     {
         if (string.IsNullOrWhiteSpace(metar))
-            return Array.Empty();
+            return new List<MetarToken>();
 
         // Print String before removing whitespaces
         Console.WriteLine($"METAR-string to trim: '{metar}'");
 
 
         // Split on whitespace, remove empty entries
-        var substrings = metar.Split((char[])null, StringSplitOptions.RemoveEmptyEntries); 
-        
-        
-        substrings[0].remove(); // Remove "METAR"/"SPECI" prefix 
+        var substrings = metar.Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
+
+
+        //substrings[0].remove(); // Remove "METAR"/"SPECI" prefix 
+
+        // Remove leading METAR/SPECI tokens if present
+        var startIndex = 0;
+        if (substrings.Length > 0 &&
+            (string.Equals(substrings[0], "METAR", StringComparison.OrdinalIgnoreCase) ||
+             string.Equals(substrings[0], "SPECI", StringComparison.OrdinalIgnoreCase)))
+        {
+            startIndex = 1;
+        }
+
+        substrings = substrings.Skip(startIndex).ToArray();
 
 
         // Trim everything from "RMK" (inclusive)
@@ -41,7 +53,7 @@ public class MetarTrimmingService
         if (rmkIndex >= 0)
         {
             if (rmkIndex == 0)
-                return Array.Empty<MetarToken>();
+                return new List<MetarToken>();
 
             Array.Resize(ref substrings, rmkIndex);  // Resize array to exclude RMK and everything after - remove rmkIndex and everything after
         }
@@ -51,7 +63,7 @@ public class MetarTrimmingService
 
         foreach (var str in substrings)
         {
-            tokens.Add(new MetarToken(Classify(str), str)); 
+            tokens.Add(new MetarToken(Classify(str), str)); //andra param - läggs till str i arrayen substringTokens i objektet
         }
 
         /*

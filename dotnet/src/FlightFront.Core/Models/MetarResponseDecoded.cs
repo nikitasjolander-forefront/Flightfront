@@ -1,12 +1,11 @@
 using System.Text.Json.Serialization;
 
 namespace FlightFront.Core.Models;
-
+/*
 public record MetarResponseDecoded(
     int Results,
     MetarDataDecoded[] Data
 );
-
 public record MetarDataDecoded(
     string Icao,
     [property: JsonPropertyName("raw_text")] string? Raw,
@@ -76,3 +75,5 @@ public record Wind(
     [property: JsonPropertyName("speed_mps")] int SpeedMps,
     [property: JsonPropertyName("gust_kts")] int? GustKts
 );
+
+*/

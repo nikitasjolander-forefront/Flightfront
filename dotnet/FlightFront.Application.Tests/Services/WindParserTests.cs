@@ -1,9 +1,13 @@
 ﻿using FlightFront.Application.Services;
+using FlightFront.Core.Models;
 
 namespace FlightFront.Application.Tests.Services;
 
 public class WindParserTests
 {
+
+    private WindParser _sut;
+
     [SetUp]
     public void Setup()
     {
@@ -18,10 +22,12 @@ public class WindParserTests
 
         var result = _sut.TryParse(new string[] { metar }) as Wind;
 
-        Assert.Pass(result.direction == "330" && result.speed == "17" && result.gust == "23" && result.unit == "KT");
+        Assert.Pass()
+
+        Assert.Pass(result.Direction == 330 && result.Speed == 17 && result.Gust == 23 && result.Unit == "KT");
     }
 
-        public void Test1()
+        public void Test2()
     {
         string metar = "10009KT";
 
