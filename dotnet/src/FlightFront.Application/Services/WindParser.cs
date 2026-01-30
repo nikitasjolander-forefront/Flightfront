@@ -49,14 +49,13 @@ public class WindParser : IParser
 
     }
 
-    public ParsedMetarBuilder ApplyParsedData(ParsedMetarBuilder builder, string[] substringTokens)
+    public void ApplyParsedData(ParsedMetarBuilder builder, string[] substringTokens)
     {
         var wind = TryParse(substringTokens) as Wind;
         if (wind != null)
         {
             builder.SetWind(wind);
         }
-        return builder;
     }
 
 }

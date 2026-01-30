@@ -9,7 +9,7 @@ public class ParsedMetarBuilder
   //  private Weather Weather { get; set; } = new();   // Enskilda objekt med lista?
     private Clouds? Clouds { get; set; }   // Enskilda objekt med lista?
    // private Temperature? Temperature { get; set; }
-    private List<string> ParseErrors { get; set; } = new();  // Ha kvar?
+    private List<string> ParseErrors { get; set; } = new(); 
 
     public ParsedMetar Build()
     {
@@ -22,7 +22,7 @@ public class ParsedMetarBuilder
            // Weather = Weather,
             Clouds = Clouds,
            // Temperature = Temperature,
-            ParseErrors = ParseErrors   //  Ha kvar?
+            ParseErrors = ParseErrors
         };
     }
 
@@ -76,14 +76,14 @@ public class ParsedMetarBuilder
         }
     */
 
-    /*
+    
 
         public ParsedMetarBuilder AddParseError(string error)
         {
             ParseErrors.Add(error);
             return this;
         }
-    */
+    
 
 
 
