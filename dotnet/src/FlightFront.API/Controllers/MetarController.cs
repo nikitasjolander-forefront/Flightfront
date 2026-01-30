@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Flightfront.Core.Interfaces;
+using FlightFront.Application.Services;
 
 namespace FlightFront.API.Controllers;
 
@@ -8,13 +9,15 @@ namespace FlightFront.API.Controllers;
 public class MetarController : ControllerBase
 {
     private readonly ICheckWxService _checkWxService;
+    private readonly MetarParserService _metarParserService;
 
-    public MetarController(ICheckWxService checkWxService)
+    public MetarController(ICheckWxService checkWxService, MetarParserService metarParserService)
     {
         _checkWxService = checkWxService;
+        _metarParserService = metarParserService;
     }
 
-    [HttpGet("{icaoCode}/decoded")]
+  /*  [HttpGet("{icaoCode}/decoded")]
     public async Task<IActionResult> GetMetarDecoded(string icaoCode, CancellationToken cancellationToken)
     {
         if (!IsValidIcaoCode(icaoCode))
@@ -30,7 +33,27 @@ public class MetarController : ControllerBase
         }
 
         return Ok(metar);
+    } */
+
+    [HttpGet("{metarCode}")]
+    public async Task<IActionResult> GetParsedMetar(string metarCode) //CancellationToken cancellationToken ?
+    {
+        if (string.IsNullOrWhiteSpace(metarCode))
+        {
+            return BadRequest("METAR code cannot be empty.");
+        }
+
+        var parsedMetar = _metarParserService.Parse(metarCode);
+
+        if (parsedMetar is null)
+        {
+            return NotFound($"Could not parse METAR: {metarCode}");
+        }
+
+        return Ok(parsedMetar);  //Ändra till DTO
+
     }
+
 
     [HttpGet("{icaoCode}")]
     public async Task<IActionResult> GetMetar(string icaoCode, CancellationToken cancellationToken)
@@ -52,4 +75,8 @@ public class MetarController : ControllerBase
 
     private static bool IsValidIcaoCode(string icaoCode) =>
         !string.IsNullOrWhiteSpace(icaoCode) && icaoCode.Length == 4 && icaoCode.All(char.IsLetter);
+
+
+
 }
+

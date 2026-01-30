@@ -1,4 +1,6 @@
 ﻿using FlightFront.Core.Interfaces;
+using FlightFront.Core.Models;
+using System.Text.RegularExpressions;
 
 namespace FlightFront.Application.Services;
 
@@ -13,9 +15,9 @@ public class WindParser : IParser
     private const string DirectionVariationsRegexPattern = "( ([0-9]{3})V([0-9]{3}))?"; // optional
 
 
-    public object TryParse(string[] substringTokens)
+    public object? TryParse(string[] substringTokens)
     {
-        if (substringTokens.Empty())
+       if (substringTokens == null || substringTokens.Length == 0)
             return null;   
         
 
@@ -32,17 +34,18 @@ public class WindParser : IParser
                 var varTo = match.Groups[8].Success ? match.Groups[8].Value.Replace("V", "") : null;
                 return new Wind
                 {
-                    Direction = direction,
+                    Direction = int.TryParse(direction, out var dirVal) ? dirVal : (int?)null,
                     IsVariable = direction == "VRB",
-                    Speed = speed,
-                    Gust = gust,
+                    Speed = int.Parse(speed),
+                    Gust = int.TryParse(gust, out var gustVal) ? gustVal : (int?)null,
                     Unit = unit,
-                    VariationFrom = varFrom,
-                    VariationTo = varTo
+                    VariationFrom = int.TryParse(varFrom, out var fromVal) ? fromVal : (int?)null,
+                    VariationTo = int.TryParse(varTo, out var toVal) ? toVal : (int?)null
                 };
             }
 
         }
+        return null;
 
     }
 
@@ -58,13 +61,3 @@ public class WindParser : IParser
 
 }
 
-// "METAR CYFB 221100Z   --> 33017G23KT <-- 4SM BLSN BKN180 M28/M32 A2983 RMK AC6 SLP109";
-// "METAR BGTL 221055Z AUTO   --> 10009KT <-- 9999    CLR M20/M23 A2999 RMK AO2 SLP143 T12031234 TSNO $";
-
-/*
- * Vind
-
-        dddffKT
-        VRBffKT
-        dddffGggKT
-*/

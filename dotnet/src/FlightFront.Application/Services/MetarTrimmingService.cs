@@ -1,4 +1,5 @@
 ﻿using FlightFront.Core.Models;
+using System.Text.RegularExpressions;
 
 namespace FlightFront.Application.Services;
 
@@ -23,17 +24,28 @@ public class MetarTrimmingService
     public List<MetarToken> TrimAndCleanMetar(string metar)
     {
         if (string.IsNullOrWhiteSpace(metar))
-            return Array.Empty();
+            return new List<MetarToken>();
 
         // Print String before removing whitespaces
         Console.WriteLine($"METAR-string to trim: '{metar}'");
 
 
         // Split on whitespace, remove empty entries
-        var substrings = metar.Split((char[])null, StringSplitOptions.RemoveEmptyEntries); 
-        
-        
-        substrings[0].remove(); // Remove "METAR"/"SPECI" prefix 
+        var substrings = metar.Split(Array.Empty<char>(), StringSplitOptions.RemoveEmptyEntries);
+
+
+        //substrings[0].remove(); // Remove "METAR"/"SPECI" prefix 
+
+        // Remove leading METAR/SPECI tokens if present
+        var startIndex = 0;
+        if (substrings.Length > 0 &&
+            (string.Equals(substrings[0], "METAR", StringComparison.OrdinalIgnoreCase) ||
+             string.Equals(substrings[0], "SPECI", StringComparison.OrdinalIgnoreCase)))
+        {
+            startIndex = 1;
+        }
+
+        substrings = substrings.Skip(startIndex).ToArray();
 
 
         // Trim everything from "RMK" (inclusive)
@@ -41,25 +53,17 @@ public class MetarTrimmingService
         if (rmkIndex >= 0)
         {
             if (rmkIndex == 0)
-                return Array.Empty<MetarToken>();
+                return new List<MetarToken>();
 
             Array.Resize(ref substrings, rmkIndex);  // Resize array to exclude RMK and everything after - remove rmkIndex and everything after
         }
-
 
         var tokens = new List<MetarToken>(substrings.Length);
 
         foreach (var str in substrings)
         {
-            tokens.Add(new MetarToken(Classify(str), str)); 
+            tokens.Add(new MetarToken(Classify(str), [str])); 
         }
-
-        /*
-            // Classify all tokens - LINQ-variant av ovan
-            var classifiedTokens = substrings
-                .Select(str => new MetarToken(Classify(str), str))
-                .ToList();
-        */
 
         return GroupConsecutiveTokens(tokens);
     }
@@ -104,7 +108,7 @@ public class MetarTrimmingService
 
         var grouped = new List<MetarToken>();
         var currentType = tokens[0].Type;
-        var currentTexts = new List<string> { tokens[0].RawText };
+        var currentTexts = new List<string>(tokens[0].substringTokens);
 
         // Check from the second token onwards
         for (int i = 1; i < tokens.Count; i++)
@@ -112,19 +116,19 @@ public class MetarTrimmingService
             if (tokens[i].Type == currentType)
             {
                 // Same type - add to current group
-                currentTexts.Add(tokens[i].RawText);
+                currentTexts.AddRange(tokens[i].substringTokens);
             }
             else
             {
                 // Different type - save current group and start new one
-                grouped.Add(new MetarToken(currentType, string.Join(" ", currentTexts)));
+                grouped.Add(new MetarToken(currentType, currentTexts.ToArray()));
                 currentType = tokens[i].Type;
-                currentTexts = new List<string> { tokens[i].RawText };
+                currentTexts = new List<string>(tokens[i].substringTokens);
             }
         }
 
         // Add the last group
-        grouped.Add(new MetarToken(currentType, string.Join(" ", currentTexts)));
+        grouped.Add(new MetarToken(currentType, currentTexts.ToArray()));
 
         return grouped;
     }
