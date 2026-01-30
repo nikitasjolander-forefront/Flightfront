@@ -7,7 +7,7 @@ public class ParsedMetar
     public Wind? Wind { get; set; }
    // public Visibility? Visibility { get; init; }
    // public Weather Weather { get; init; } = new(); //Lista av objekt, eller objekt med lista med string?
-   // public Clouds Clouds { get; init; } = new(); //Lista av objekt, eller objekt med lista med string?
+    public Clouds? Clouds { get; init; }  //Lista av objekt, eller objekt med lista med string?
    // public Temperature? Temperature { get; init; }
     public List<string> ParseErrors { get; init; } = new();
 }

@@ -17,25 +17,7 @@ public class MetarController : ControllerBase
         _metarParserService = metarParserService;
     }
 
-  /*  [HttpGet("{icaoCode}/decoded")]
-    public async Task<IActionResult> GetMetarDecoded(string icaoCode, CancellationToken cancellationToken)
-    {
-        if (!IsValidIcaoCode(icaoCode))
-        {
-            return BadRequest("Invalid ICAO code. Must be 4 letters.");
-        }
-
-        var metar = await _checkWxService.GetMetarAsync(icaoCode, cancellationToken);
-
-        if (metar is null)
-        {
-            return NotFound($"No METAR found for {icaoCode}");
-        }
-
-        return Ok(metar);
-    } */
-
-    [HttpGet("{metarCode}")]
+    [HttpGet("/{metarCode}")]
     public async Task<IActionResult> GetParsedMetar(string metarCode) //CancellationToken cancellationToken ?
     {
         if (string.IsNullOrWhiteSpace(metarCode))
