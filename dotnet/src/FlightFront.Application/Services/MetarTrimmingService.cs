@@ -71,8 +71,6 @@ public class MetarTrimmingService
 
     private static TokenType Classify(string token)
     {
-
-
         if (IcaoRegex.IsMatch(token))
             return TokenType.Icao;
 

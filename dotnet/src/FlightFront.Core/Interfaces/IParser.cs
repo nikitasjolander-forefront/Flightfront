@@ -6,5 +6,5 @@ public interface IParser
 {
     public object? TryParse(string[] substringTokens);  
 
-    public ParsedMetarBuilder ApplyParsedData(ParsedMetarBuilder builder, string[] substringTokens);
+    public void ApplyParsedData(ParsedMetarBuilder builder, string[] substringTokens);
 }

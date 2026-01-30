@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Flightfront.Core.Interfaces;
 using FlightFront.Application.Services;
+using FlightFront.Application.Mapping;
 
 namespace FlightFront.API.Controllers;
 
@@ -17,25 +18,7 @@ public class MetarController : ControllerBase
         _metarParserService = metarParserService;
     }
 
-  /*  [HttpGet("{icaoCode}/decoded")]
-    public async Task<IActionResult> GetMetarDecoded(string icaoCode, CancellationToken cancellationToken)
-    {
-        if (!IsValidIcaoCode(icaoCode))
-        {
-            return BadRequest("Invalid ICAO code. Must be 4 letters.");
-        }
-
-        var metar = await _checkWxService.GetMetarAsync(icaoCode, cancellationToken);
-
-        if (metar is null)
-        {
-            return NotFound($"No METAR found for {icaoCode}");
-        }
-
-        return Ok(metar);
-    } */
-
-    [HttpGet("{metarCode}")]
+    [HttpGet("/{metarCode}")]
     public async Task<IActionResult> GetParsedMetar(string metarCode) //CancellationToken cancellationToken ?
     {
         if (string.IsNullOrWhiteSpace(metarCode))
@@ -50,8 +33,7 @@ public class MetarController : ControllerBase
             return NotFound($"Could not parse METAR: {metarCode}");
         }
 
-        return Ok(parsedMetar);  //Ändra till DTO
-
+       return Ok(parsedMetar); // Ändra till DTO
     }
 
 

@@ -7,23 +7,24 @@ public class MetarParserService
 {
 
     private readonly MetarTrimmingService _trimmingService;
-    private readonly Dictionary<TokenType, IParser> _parserMap;
+    
+    // Map each TokenType to its corresponding parser
+    private static readonly Dictionary<TokenType, IParser> _parserMap = new()
+    {           
+        { TokenType.Wind, new WindParser() },
+        { TokenType.Icao, new IcaoParser() },
+        { TokenType.ObservationTime, new ObservationTimeParser()}/*,
+        { TokenType.Visibility, new VisibilityParser() },
+        { TokenType.Weather, new WeatherParser() },
+        { TokenType.Clouds, new CloudsParser() },
+        { TokenType.Temperature, new TemperatureParser() }*/         
+    };
 
     public MetarParserService(MetarTrimmingService trimmingService)
     {
         _trimmingService = trimmingService;
-
-        // Map each TokenType to its corresponding parser
-        _parserMap = new Dictionary<TokenType, IParser>
-        {
-            { TokenType.Wind, new WindParser() },
-            /*{ TokenType.Visibility, new VisibilityParser() },
-            { TokenType.Weather, new WeatherParser() },
-            { TokenType.Clouds, new CloudsParser() },
-            { TokenType.TemperatureDewpoint, new TemperatureParser() },
-            { TokenType.Altimeter, new AltimeterParser() }*/            
-        };
     }
+
 
     public ParsedMetar Parse(string metarString)
     {
@@ -38,13 +39,13 @@ public class MetarParserService
             // Skip tokens we don't have parsers for yet
             if (!_parserMap.ContainsKey(token.Type))
             {
-                Console.WriteLine($"No parser registered for {token.Type}: {token.substringTokens}");
+                parsedMetarBuilder.AddParseError($"No parser for {token.Type}:{token.substringTokens}");
                 continue;
             }
 
             var parser = _parserMap[token.Type];
 
-            parsedMetarBuilder = parser.ApplyParsedData(parsedMetarBuilder, token.substringTokens);
+            parser.ApplyParsedData(parsedMetarBuilder, token.substringTokens);
     }
      return parsedMetarBuilder.Build();
     }
