@@ -7,7 +7,7 @@ public class ParsedMetarBuilder
     private Wind? Wind { get; set; }
    // private Visibility? Visibility { get; set; }
   //  private Weather Weather { get; set; } = new();   // Enskilda objekt med lista?
-  //  private Clouds Clouds { get; set; } = new();   // Enskilda objekt med lista?
+    private Clouds? Clouds { get; set; }   // Enskilda objekt med lista?
    // private Temperature? Temperature { get; set; }
     private List<string> ParseErrors { get; set; } = new();  // Ha kvar?
 
@@ -20,7 +20,7 @@ public class ParsedMetarBuilder
             Wind = Wind,
            // Visibility = Visibility,
            // Weather = Weather,
-           // Clouds = Clouds,
+            Clouds = Clouds,
            // Temperature = Temperature,
             ParseErrors = ParseErrors   //  Ha kvar?
         };
@@ -45,45 +45,45 @@ public class ParsedMetarBuilder
         return this;
     }
 
-/*
-    public ParsedMetarBuilder SetVisibility(Visibility visibility)
+    /*
+        public ParsedMetarBuilder SetVisibility(Visibility visibility)
+        {
+            Visibility = visibility;
+            return this;
+        }
+    */
+
+    /*    public ParsedMetarBuilder AddWeather(Weather weather)
+        {
+            Weather.Add(weather);
+            return this;
+        }
+    */
+
+
+    public ParsedMetarBuilder SetClouds(Clouds clouds)
     {
-        Visibility = visibility;
+        Clouds = clouds;
         return this;
     }
-*/
 
-/*    public ParsedMetarBuilder AddWeather(Weather weather)
-    {
-        Weather.Add(weather);
-        return this;
-    }
-*/
 
-/*
-    public ParsedMetarBuilder AddCloud(Clouds clouds)
-    {
-        Clouds.Add(clouds);
-        return this;
-    }
-*/
+    /*
+        public ParsedMetarBuilder SetTemperature(Temperature temperature)
+        {
+            Temperature = temperature;
+            return this;
+        }
+    */
 
-/*
-    public ParsedMetarBuilder SetTemperature(Temperature temperature)
-    {
-        Temperature = temperature;
-        return this;
-    }
-*/
+    /*
 
-/*
-
-    public ParsedMetarBuilder AddParseError(string error)
-    {
-        ParseErrors.Add(error);
-        return this;
-    }
-*/
+        public ParsedMetarBuilder AddParseError(string error)
+        {
+            ParseErrors.Add(error);
+            return this;
+        }
+    */
 
 
 
