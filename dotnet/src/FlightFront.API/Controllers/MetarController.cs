@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Flightfront.Core.Interfaces;
+using FlightFront.Application.Services;
+using FlightFront.API.Mapping;
 
 namespace FlightFront.API.Controllers;
 
@@ -8,29 +10,32 @@ namespace FlightFront.API.Controllers;
 public class MetarController : ControllerBase
 {
     private readonly ICheckWxService _checkWxService;
+    private readonly MetarParserService _metarParserService;
 
-    public MetarController(ICheckWxService checkWxService)
+    public MetarController(ICheckWxService checkWxService, MetarParserService metarParserService)
     {
         _checkWxService = checkWxService;
+        _metarParserService = metarParserService;
     }
 
-    [HttpGet("{icaoCode}/decoded")]
-    public async Task<IActionResult> GetMetarDecoded(string icaoCode, CancellationToken cancellationToken)
+    [HttpGet("/{metarCode}")]
+    public async Task<IActionResult> GetParsedMetar(string metarCode) //CancellationToken cancellationToken ?
     {
-        if (!IsValidIcaoCode(icaoCode))
+        if (string.IsNullOrWhiteSpace(metarCode))
         {
-            return BadRequest("Invalid ICAO code. Must be 4 letters.");
+            return BadRequest("METAR code cannot be empty.");
         }
 
-        var metar = await _checkWxService.GetMetarAsync(icaoCode, cancellationToken);
+        var parsedMetar = _metarParserService.Parse(metarCode);
 
-        if (metar is null)
+        if (parsedMetar is null)
         {
-            return NotFound($"No METAR found for {icaoCode}");
+            return NotFound($"Could not parse METAR: {metarCode}");
         }
 
-        return Ok(metar);
+        return Ok(parsedMetar.ToDto());
     }
+
 
     [HttpGet("{icaoCode}")]
     public async Task<IActionResult> GetMetar(string icaoCode, CancellationToken cancellationToken)
@@ -52,4 +57,8 @@ public class MetarController : ControllerBase
 
     private static bool IsValidIcaoCode(string icaoCode) =>
         !string.IsNullOrWhiteSpace(icaoCode) && icaoCode.Length == 4 && icaoCode.All(char.IsLetter);
+
+
+
 }
+

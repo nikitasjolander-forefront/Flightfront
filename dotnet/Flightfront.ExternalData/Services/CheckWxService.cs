@@ -18,16 +18,6 @@ public class CheckWxService : ICheckWxService
         _httpClient = httpClient;
     }
 
-    public async Task<MetarDataDecoded?> GetMetarAsync(string icaoCode, CancellationToken cancellationToken = default)
-    {
-        var response = await _httpClient.GetFromJsonAsync<MetarResponseDecoded>(
-            $"metar/{icaoCode.ToUpperInvariant()}/decoded",
-            JsonOptions,
-            cancellationToken);
-
-        return response?.Data?.FirstOrDefault();
-    }
-
     public async Task<string?> GetMetar(string icaoCode, CancellationToken cancellationToken = default)
     {
         var response = await _httpClient.GetFromJsonAsync<MetarResponse>(
@@ -37,4 +27,5 @@ public class CheckWxService : ICheckWxService
 
         return response?.Data?.FirstOrDefault();
     }
+
 }

@@ -1,12 +1,12 @@
-namespace FlightFront.Core.Models;
+namespace FlightFront.API.DTOs;
 
-public record Wind
+public record WindDto
 {
-    public int? Direction { get; init; }  // null for VRB (variable)
+    public int? Direction { get; init; }
     public bool IsVariable { get; init; }
     public int Speed { get; init; }
     public int? Gust { get; init; }
-    public string Unit { get; init; } = string.Empty;  // KT, MPS, MPH
+    public string Unit { get; init; } = string.Empty;
     public int? VariationFrom { get; init; }
     public int? VariationTo { get; init; }
 }
