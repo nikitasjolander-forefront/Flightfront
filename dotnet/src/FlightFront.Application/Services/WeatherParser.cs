@@ -7,10 +7,9 @@ namespace FlightFront.Application.Services;
 public class WeatherParser : IParser
 {
     
-{       
     private static readonly Regex WeatherRegexPattern = new(@"^(-|\+)?(SN|RA|FG|BR)$");
 
-	public object TryParse(string[] substringTokens)
+	public object? TryParse(string[] substringTokens)
 	{
 		if (substringTokens == null || substringTokens.Length == 0)
 			return null;
@@ -43,7 +42,7 @@ public class WeatherParser : IParser
 		var weather = TryParse(substringTokens) as Weather;
 		if (weather != null)
 		{
-			builder.SetWeather(weather);
+			builder.AddWeather(weather);
 		}
 	}
 

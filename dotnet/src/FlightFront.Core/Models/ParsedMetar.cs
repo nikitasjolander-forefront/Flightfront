@@ -4,11 +4,9 @@ public class ParsedMetar
 {
     public string Icao { get; init; } = string.Empty;
     public DateTime? ObservationTime { get; init; }
-    public Wind? Wind { get; set; }
+    public Wind? Wind { get; init; }
     public Visibility? Visibility { get; init; }
-    public Weather Weather { get; init; }
+    public List<Weather> Weathers { get; init; } = new();
     public Clouds? Clouds { get; init; } 
-   // public Temperature? Temperature { get; init; }
-   // public AirPressure? AirPressure { get; init; }
     public List<string> ParseErrors { get; init; } = new();
 }
