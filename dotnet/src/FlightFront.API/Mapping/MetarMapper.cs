@@ -16,7 +16,7 @@ public static class MetarMapper
             Wind = parsedMetar.Wind?.ToDto(),
             // Visibility = parsedMetar.Visibility?.ToDto(),
             // Weather = parsedMetar.Weather?.ToDto(),
-            // Clouds = parsedMetar.Clouds?.ToDto(),
+            Clouds = parsedMetar.Clouds.Select(c => c.ToDto()).ToList(), 
             // Temperature = parsedMetar.Temperature?.ToDto(),
             // AirPressure = parsedMetar.AirPressure?.ToDto(),
             ParseErrors = parsedMetar.ParseErrors
@@ -36,53 +36,55 @@ public static class MetarMapper
             VariationTo = wind.VariationTo
         };
     }
- 
- /*
-    public static VisibilityDto ToDto(this Visibility visibility)
-    {
-        return new VisibilityDto
-        {
 
-        };
-    }
- */
- /*
-    public static WeatherDto ToDto(this Weather weather)
-    {
-        return new WeatherDto
-        {
+    /*
+       public static VisibilityDto ToDto(this Visibility visibility)
+       {
+           return new VisibilityDto
+           {
 
-        };
-    }
- */
- /*
+           };
+       }
+    */
+    /*
+       public static WeatherDto ToDto(this Weather weather)
+       {
+           return new WeatherDto
+           {
+
+           };
+       }
+    */
+
     public static CloudsDto ToDto(this Clouds clouds)
     {
         return new CloudsDto
         {
-
-        };
-    }
- */
- /*
-    public static TemperatureDto ToDto(this Temperature temperature)
-    {
-        return new TemperatureDto
-        {
-
+                CloudCover = clouds.CloudCover,
+                CloudHeight = clouds.CloudHeight,
+                Modifier = clouds.Modifier
         };
     }
 
- */
- /*
-    public static AirPressureDto ToDto(this AirPressure airPressure)
-    {
-        return new AirPressureDto
-        {
+    /*
+       public static TemperatureDto ToDto(this Temperature temperature)
+       {
+           return new TemperatureDto
+           {
 
-        };
-    }
+           };
+       }
+
     */
-    
+    /*
+       public static AirPressureDto ToDto(this AirPressure airPressure)
+       {
+           return new AirPressureDto
+           {
+
+           };
+       }
+       */
+
 
 }
