@@ -72,11 +72,11 @@ export function WeatherCard({weather}: WeatherProps) {
               {weather?.visibility != null && (
                 <WeatherRow label="Visibility" value={weather.visibility} />
               )}
-              {weather?.temperature != null && (
-                <WeatherRow label="Temperature" value={`${weather.temperature}°C`} />
+              {weather?.temperature?.degree != null && (
+                <WeatherRow label="Temperature" value={`${weather.temperature.degree}°C`} />
               )}
-              {weather?.dewPoint != null && (
-                <WeatherRow label="Dew Point" value={`${weather.dewPoint}°C`} />
+              {weather?.temperature?.dewpoint != null && (
+                <WeatherRow label="Dew Point" value={`${weather.temperature.dewpoint}°C`} />
               )}
               {weather?.qnh != null && <WeatherRow label="QNH" value={`${weather.qnh} hPa`} />}
               {weather?.clouds && weather.clouds.length > 0 && (

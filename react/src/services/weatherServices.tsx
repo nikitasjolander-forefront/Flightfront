@@ -9,7 +9,7 @@ export type Weather = {
   parseErrors?: string[];
   location?: string;
   visibility?: string | number;
-  temperature?: number;
+  temperature?: Temperature;
   dewPoint?: number;
   qnh?: number;
   metar?: string;
@@ -31,6 +31,10 @@ type Clouds = {
   cloudHeight?: number;
   modifier?: string | null;
 };
+  type Temperature = {
+    degree : number;
+    dewpoint : number;
+  };
 
 export async function getWeatherByIcao(icao: string): Promise<Weather> {
   const res = await axios.get<Weather>(`https://localhost:7168/api/Metar/${encodeURIComponent(icao)}`);

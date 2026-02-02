@@ -8,7 +8,7 @@ public class ParsedMetarDto
     // public VisibilityDto? Visibility { get; init; }
     // public WeatherDto? Weather { get; init; }
     public List<CloudsDto> Clouds { get; init; } = [];  
-    // public TemperatureDto? Temperature { get; init; }
+    public TemperatureDto? Temperature { get; init; }
     // public AirPressureDto? AirPressure { get; init; }
     public List<string> ParseErrors { get; init; } = new();
 }

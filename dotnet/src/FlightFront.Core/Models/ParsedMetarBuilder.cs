@@ -9,7 +9,7 @@ public class ParsedMetarBuilder
     // private Visibility? Visibility { get; set; }
     //  private Weather Weather { get; set; } = new();   // Enskilda objekt med lista?
     private List<Clouds> Clouds { get; set; } = []; 
-    // private Temperature? Temperature { get; set; }
+    private Temperature? Temperature { get; set; }
     // private AirPressure? AirPressure { get; set; }
     private List<string> ParseErrors { get; set; } = new(); 
 
@@ -24,7 +24,7 @@ public class ParsedMetarBuilder
             // Visibility = Visibility,
             // Weather = Weather,
             Clouds = Clouds,
-           // Temperature = Temperature,
+            Temperature = Temperature,
            //AirPressure = AirPressure,
             ParseErrors = ParseErrors
         };
@@ -78,13 +78,13 @@ public class ParsedMetarBuilder
     }
 
 
-    /*
-        public ParsedMetarBuilder SetTemperature(Temperature temperature)
-        {
-            Temperature = temperature;
-            return this;
-        }
-    */
+
+    public ParsedMetarBuilder SetTemperature(Temperature temperature)
+    {
+        Temperature = temperature;
+        return this;
+    }
+
 
     /*
     public ParsedMetarBuilder SetAirPressure(AirPressure airPressure)

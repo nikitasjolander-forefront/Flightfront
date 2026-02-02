@@ -17,7 +17,7 @@ public static class MetarMapper
             // Visibility = parsedMetar.Visibility?.ToDto(),
             // Weather = parsedMetar.Weather?.ToDto(),
             Clouds = parsedMetar.Clouds.Select(c => c.ToDto()).ToList(), 
-            // Temperature = parsedMetar.Temperature?.ToDto(),
+            Temperature = parsedMetar.Temperature?.ToDto(),
             // AirPressure = parsedMetar.AirPressure?.ToDto(),
             ParseErrors = parsedMetar.ParseErrors
         };
@@ -66,16 +66,17 @@ public static class MetarMapper
         };
     }
 
-    /*
-       public static TemperatureDto ToDto(this Temperature temperature)
-       {
-           return new TemperatureDto
-           {
 
-           };
-       }
+    public static TemperatureDto ToDto(this Temperature temperature)
+    {
+        return new TemperatureDto
+        {
+            Degree = temperature.Degree,
+            Dewpoint = temperature.Dewpoint
+        };
+    }
 
-    */
+
     /*
        public static AirPressureDto ToDto(this AirPressure airPressure)
        {
