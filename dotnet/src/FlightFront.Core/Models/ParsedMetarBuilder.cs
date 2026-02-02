@@ -2,6 +2,7 @@
 
 public class ParsedMetarBuilder
 {
+    private string RawMetar { get; set; } = string.Empty;
     private string Icao { get; set; } = string.Empty;
     private DateTime? ObservationTime { get; set; }
     private Wind? Wind { get; set; }
@@ -16,6 +17,7 @@ public class ParsedMetarBuilder
     {
         return new ParsedMetar
         {
+            RawMetar = RawMetar,
             Icao = Icao,
             ObservationTime = ObservationTime,
             Wind = Wind,
@@ -23,11 +25,18 @@ public class ParsedMetarBuilder
            // Weather = Weather,
             Clouds = Clouds,
            // Temperature = Temperature,
+           //AirPressure = AirPressure,
             ParseErrors = ParseErrors
         };
     }
 
     // Builder methods for each property
+        public ParsedMetarBuilder SetRawMetar(string rawMetar)
+    {
+        RawMetar = rawMetar;
+        return this;
+    }
+    
     public ParsedMetarBuilder SetIcao(string icao)
     {
         Icao = icao;
@@ -54,7 +63,7 @@ public class ParsedMetarBuilder
         }
     */
 
-    /*    public ParsedMetarBuilder AddWeather(Weather weather)
+    /*    public ParsedMetarBuilder SetWeather(Weather weather)
         {
             Weather.Add(weather);
             return this;

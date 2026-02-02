@@ -2,6 +2,7 @@ namespace FlightFront.Core.Models;
 
 public class ParsedMetar
 {
+    public string RawMetar { get; init; } = string.Empty;
     public string Icao { get; init; } = string.Empty;
     public DateTime? ObservationTime { get; init; }
     public Wind? Wind { get; set; }
