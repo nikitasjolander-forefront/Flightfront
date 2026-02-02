@@ -17,7 +17,7 @@ public class MetarParserService
        // { TokenType.Visibility, new VisibilityParser() },
        // { TokenType.Weather, new WeatherParser() },
         { TokenType.Clouds, new CloudsParser() },
-       // { TokenType.Temperature, new TemperatureParser() }         
+        { TokenType.Temperature, new TemperatureParser() }         
        // { TokenType.AirPressure, new AirPressureParser() }
     };
 
