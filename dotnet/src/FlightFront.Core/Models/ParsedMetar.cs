@@ -8,7 +8,7 @@ public class ParsedMetar
     public Wind? Wind { get; set; }
    // public Visibility? Visibility { get; init; }
    // public Weather Weather { get; init; }
-    public Clouds? Clouds { get; init; } 
+    public List<Clouds> Clouds { get; set; } = [];  
    // public Temperature? Temperature { get; init; }
    // public AirPressure? AirPressure { get; init; }
     public List<string> ParseErrors { get; init; } = new();

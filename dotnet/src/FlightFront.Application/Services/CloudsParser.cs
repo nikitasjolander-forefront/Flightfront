@@ -66,35 +66,8 @@ public class CloudsParser : IParser
         {
             foreach (var cloud in clouds)
             {
-                builder.SetClouds(cloud);
+                builder.AddClouds(cloud); 
             }
         }
     }
-
-    public string CloudTypeConverter(CloudType cloudType)
-    {
-        return cloudType switch
-        {
-            CloudType.SKC => "Sky Clear",
-            CloudType.CLR => "Clear (automated)",
-            CloudType.NSC => "No Significant Cloud",
-            CloudType.NCD => "No Cloud Detected",
-            CloudType.FEW => "Few",
-            CloudType.SCT => "Scattered",
-            CloudType.BKN => "Broken",
-            CloudType.OVC => "Overcast",
-            CloudType.VV => "Vertical Visibility",
-            _ => "-"
-        };
-    }
 }
-
-// Examples:
-// "FEW007"       -> Few at 700 ft
-// "BKN014CB"     -> Broken at 1400 ft with Cumulonimbus
-// "SCT035TCU"    -> Scattered at 3500 ft with Towering Cumulus
-// "OVC100"       -> Overcast at 10000 ft
-// "VV001"        -> Vertical visibility 100 ft
-// "BKN013///"    -> Broken at 1300 ft, cloud type unknown (modifier ignored)
-// "SKC"          -> Sky clear
-// "CLR"          -> Clear (automated)
