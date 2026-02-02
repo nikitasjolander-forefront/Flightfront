@@ -36,53 +36,57 @@ public static class MetarMapper
             VariationTo = wind.VariationTo
         };
     }
- 
- /*
-    public static VisibilityDto ToDto(this Visibility visibility)
-    {
-        return new VisibilityDto
-        {
 
-        };
-    }
- */
- /*
-    public static WeatherDto ToDto(this Weather weather)
-    {
-        return new WeatherDto
-        {
+    /*
+       public static VisibilityDto ToDto(this Visibility visibility)
+       {
+           return new VisibilityDto
+           {
 
-        };
-    }
- */
- /*
+           };
+       }
+    */
+    /*
+       public static WeatherDto ToDto(this Weather weather)
+       {
+           return new WeatherDto
+           {
+
+           };
+       }
+    */
+
     public static CloudsDto ToDto(this Clouds clouds)
     {
         return new CloudsDto
         {
+            CloudCoverDescription = clouds.CloudCoverDescription,
 
-        };
-    }
- */
- /*
-    public static TemperatureDto ToDto(this Temperature temperature)
-    {
-        return new TemperatureDto
-        {
+            CloudHeight = clouds.CloudHeight,
 
+            ModifierDescription = clouds.ModifierDescription
         };
     }
 
- */
- /*
-    public static AirPressureDto ToDto(this AirPressure airPressure)
-    {
-        return new AirPressureDto
-        {
+    /*
+       public static TemperatureDto ToDto(this Temperature temperature)
+       {
+           return new TemperatureDto
+           {
 
-        };
-    }
+           };
+       }
+
     */
-    
+    /*
+       public static AirPressureDto ToDto(this AirPressure airPressure)
+       {
+           return new AirPressureDto
+           {
+
+           };
+       }
+       */
+
 
 }

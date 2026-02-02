@@ -8,7 +8,7 @@ interface IcaoProps {
 }
 
 function IcaoInput({icaoRaw, onSubmit }: IcaoProps) {
-  const [icao, setIcao] = useState("");
+  const [icao, setIcao] = useState(icaoRaw || "");
 
   const handelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIcao(e.target.value);

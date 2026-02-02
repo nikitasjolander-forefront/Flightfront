@@ -56,14 +56,28 @@ export function WeatherCard({weather}: WeatherProps) {
             >
               <i className="wi wi-rain"></i>
             </Box>
-            <Stack direction="column" width="100%">
-              {/*TODO: only show if exist*/}
-              <WeatherRow label="Time" value={`${weather.time.day} ${weather.time.time}`} />
-              <WeatherRow label="Wind" value={`Direction ${weather.wind.direction} and speed ${weather.wind.speed} knot`}/>
-              <WeatherRow label="Visibility" value={weather.visibility} />
-              <WeatherRow label="Temperature" value={weather.temperature} />
-              <WeatherRow label="QNH" value={weather.qnh} />
+                 <Stack direction="column" width="100%">
+              {weather?.time?.day != null && weather?.time?.time != null && (
+                <WeatherRow
+                  label="Time"
+                  value={`${weather.time.day} ${weather.time.time}`}
+                />
+              )}
+              {weather?.wind?.direction != null && weather?.wind?.speed != null && (
+                <WeatherRow
+                  label="Wind"
+                  value={`Direction ${weather.wind.direction} and speed ${weather.wind.speed} knot`}
+                />
+              )}
+              {weather?.visibility != null && (
+                <WeatherRow label="Visibility" value={weather.visibility} />
+              )}
+              {weather?.temperature != null && (
+                <WeatherRow label="Temperature" value={weather.temperature} />
+              )}
+              {weather?.qnh != null && <WeatherRow label="QNH" value={weather.qnh} />}
             </Stack>
+ 
           </Box>
         </CardContent>
       </Card>
