@@ -1,13 +1,23 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>a5613dfd-6f63-47b4-ae9f-6cb23fa0a498</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="CsvHelper" Version="33.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="10.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Flightfront.ExternalData\Flightfront.ExternalData.csproj" />
+    <ProjectReference Include="..\FlightFront.Application\FlightFront.Application.csproj" />
+    <ProjectReference Include="..\FlightFront.Core\FlightFront.Core.csproj" />
+    <ProjectReference Include="..\FlightFront.Infrastructure\FlightFront.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
