@@ -3,16 +3,16 @@ import type React from "react";
 import { useEffect, useState } from "react";
 
 interface MetarProps {
-  metarRaw: string;
+  rawMetar: string;
   onSubmit: (params: {type: string, value: string}) => void; 
 }
 
-export function MetarField({ metarRaw, onSubmit }: MetarProps) {
-  const [metar, setMetar] = useState(metarRaw);
+export function MetarField({ rawMetar, onSubmit }: MetarProps) {
+  const [metar, setMetar] = useState(rawMetar);
   
   useEffect(() => {
-    setMetar(metarRaw)
-  }, [metarRaw]);
+    setMetar(rawMetar)
+  }, [rawMetar]);
 
   const handelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMetar(e.target.value);

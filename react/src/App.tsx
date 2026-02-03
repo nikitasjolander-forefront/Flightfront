@@ -8,12 +8,12 @@ import { useMutation } from "@tanstack/react-query";
 import {
   getWeatherByIcao,
   getWeatherByMetar,
-  type Weather,
+  type WeatherAll,
 } from "./services/weatherServices";
 
 function App() {
   const weatherMutation = useMutation<
-    Weather,
+    WeatherAll,
     Error,
     { type: string; value: string }
   >({
@@ -33,7 +33,7 @@ function App() {
           icaoRaw={weatherMutation.data ? weatherMutation.data.icao : ""}
         />
         <MetarField
-          metarRaw={weatherMutation.data ? weatherMutation.data.metarRaw : ""}
+          rawMetar={weatherMutation.data ? weatherMutation.data.rawMetar : ""}
           onSubmit={weatherMutation.mutate}
         />
 

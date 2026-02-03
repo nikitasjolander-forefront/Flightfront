@@ -1,18 +1,18 @@
 import axios from "axios";
 
-export type Weather = {
-  metarRaw: string;
+export type WeatherAll = {
+  rawMetar: string;
   icao: string;
   observationTime?: string;
   wind?: Wind;
   clouds?: Clouds[];
   parseErrors?: string[];
-  location?: string;
-  visibility?: string | number;
-  temperature?: number;
+  visibility?: Visibility;
+  temperature?: Temperature;
   dewPoint?: number;
   qnh?: number;
-  weatherPhenomena?: WeatherPhenomena;
+  weather?: Weather;
+  airport?: Airport;
 };
 
 type Wind = {
@@ -32,18 +32,36 @@ type Clouds = {
   modifier?: string | null;
 };
 
-type WeatherPhenomena = {
+type Weather = {
   snow?: "SN" | "-SN";
   rain?: "RA" | "-RA";
   fog?: "FG" | "BR";
 };
 
-export async function getWeatherByIcao(icao: string): Promise<Weather> {
-  const res = await axios.get<Weather>(`https://localhost:7168/api/Metar/${encodeURIComponent(icao)}`);
+type Temperature = {
+  degree?: number;
+  dewpoint?: number;
+};
+
+type Airport ={
+  type? : string;
+  name? : string;
+  continent? : string;
+  municipality? : string;
+  icao?: string;
+} 
+
+type Visibility = {
+  distance?: number;
+  unit?: string;
+  isCavok?: boolean;
+};
+export async function getWeatherByIcao(icao: string): Promise<WeatherAll> {
+  const res = await axios.get<WeatherAll>(`https://localhost:7168/api/Metar/${encodeURIComponent(icao)}`);
   return res.data;
 }
 
-export async function getWeatherByMetar(metar: string): Promise<Weather> {
- const res = await axios.get<Weather>(`https://localhost:7168/${encodeURIComponent(metar)}`);
+export async function getWeatherByMetar(metar: string): Promise<WeatherAll> {
+ const res = await axios.get<WeatherAll>(`https://localhost:7168/${encodeURIComponent(metar)}`);
   return res.data;
 }

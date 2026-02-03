@@ -44,7 +44,7 @@ public static class MetarMapper
 			return "CAVOK";
 
 		return visibility.Distance.ToString("D4");
-	}
+    }
 
 	public static WeatherDto? ToDto(this List<Weather> weathers)
 	{

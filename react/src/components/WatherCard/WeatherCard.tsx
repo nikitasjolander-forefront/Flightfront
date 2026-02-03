@@ -7,7 +7,7 @@ import {
   Stack,
 } from "@mui/material";
 import "../../assets/weather-icons/css/weather-icons.min.css";
-import type { Weather } from "../../services/weatherServices";
+import type { WeatherAll } from "../../services/weatherServices";
 import { getWeatherIcon } from "../../utils/weatherIconMapper";
 
 interface WeatherRowProps {
@@ -16,7 +16,7 @@ interface WeatherRowProps {
 }
 
 interface WeatherProps {
-  weather: Weather;
+  weather: WeatherAll;
 }
 
 function WeatherRow({ label, value }: WeatherRowProps) {
@@ -33,12 +33,12 @@ function WeatherRow({ label, value }: WeatherRowProps) {
   );
 }
 
-export function WeatherCard({weather}: WeatherProps) {
-  const weatherIconClass = getWeatherIcon(weather.weatherPhenomena);
+export function WeatherCard({weather: weatherAll}: WeatherProps) {
+  const weatherIconClass = getWeatherIcon(weatherAll.weather);
   return (
     <>
       <Card variant="outlined" sx={{ p: 2 }}>
-        <CardHeader title={`Weather at ${weather.location}`} />
+        <CardHeader title={`Weather at ${weatherAll.airport?.name || weatherAll.icao}`} />
         <CardContent>
           <Box sx={{ display: "flex", p: 0 }}>
             <Box
@@ -52,32 +52,32 @@ export function WeatherCard({weather}: WeatherProps) {
               <i className={`wi ${weatherIconClass}`}></i>
             </Box>
             <Stack direction="column" width="100%">
-                {weather?.observationTime && (
+                {weatherAll?.observationTime && (
                 <WeatherRow
                   label="Observation Time"
-                  value={new Date(weather.observationTime).toLocaleString()}
+                  value={new Date(weatherAll.observationTime).toLocaleString()}
                 />
               )}
-              {weather?.wind?.direction != null && weather?.wind?.speed != null && (
+              {weatherAll?.wind?.direction != null && weatherAll?.wind?.speed != null && (
                 <WeatherRow
                   label="Wind"
-                  value={`${weather.wind.direction}° at ${weather.wind.speed} ${weather.wind.unit || 'KT'}${weather.wind.gust ? ` gusting ${weather.wind.gust}` : ''}`}
+                  value={`${weatherAll.wind.direction}° at ${weatherAll.wind.speed} ${weatherAll.wind.unit || 'KT'}${weatherAll.wind.gust ? ` gusting ${weatherAll.wind.gust}` : ''}`}
                 />
               )}
-              {weather?.visibility != null && (
-                <WeatherRow label="Visibility" value={weather.visibility} />
+              {weatherAll?.visibility != null && (
+                <WeatherRow label="Visibility" value={`${weatherAll.visibility.distance} ${weatherAll.visibility.unit || ''}${weatherAll.visibility.isCavok ? ' (CAVOK)' : ''}`} />
               )}
-              {weather?.temperature != null && (
-                <WeatherRow label="Temperature" value={`${weather.temperature}°C`} />
+              {weatherAll?.temperature?.degree != null && (
+                <WeatherRow label="Temperature" value={`${weatherAll.temperature.degree}°C`} />
               )}
-              {weather?.dewPoint != null && (
-                <WeatherRow label="Dew Point" value={`${weather.dewPoint}°C`} />
+              {weatherAll?.temperature?.dewpoint != null && (
+                <WeatherRow label="Dew Point" value={`${weatherAll.temperature.dewpoint}°C`} />
               )}
-              {weather?.qnh != null && <WeatherRow label="QNH" value={`${weather.qnh} hPa`} />}
-              {weather?.clouds && weather.clouds.length > 0 && (
+              {weatherAll?.qnh != null && <WeatherRow label="QNH" value={`${weatherAll.qnh} hPa`} />}
+              {weatherAll?.clouds && weatherAll.clouds.length > 0 && (
                 <WeatherRow 
                   label="Clouds" 
-                  value={weather.clouds.map(c => 
+                  value={weatherAll.clouds.map(c => 
                     `${c.cloudCoverDescription || c.cloudCover} at ${c.cloudHeight}ft`
                   ).join(', ')} 
                 />

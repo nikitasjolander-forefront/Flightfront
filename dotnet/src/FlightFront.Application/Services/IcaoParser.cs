@@ -10,8 +10,7 @@ public class IcaoParser : IParser
         if (substringTokens == null || substringTokens.Length == 0)
             return null;
 
-        // ICAO codes are exactly 4 letters and all uppercase
-        var icao = substringTokens.FirstOrDefault();
+        var icao = substringTokens[0];
         if (string.IsNullOrWhiteSpace(icao) || icao.Length != 4 || !icao.All(char.IsLetter))
             return null;
 

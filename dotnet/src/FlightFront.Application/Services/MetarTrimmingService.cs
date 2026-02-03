@@ -65,11 +65,6 @@ public class MetarTrimmingService
             tokens.Add(new MetarToken(Classify(str), [str])); 
         }
 
-		foreach (var str in substrings)
-		{
-			tokens.Add(new MetarToken(Classify(str), [str]));
-		}
-
 		return GroupConsecutiveTokens(tokens);
 	}
 
