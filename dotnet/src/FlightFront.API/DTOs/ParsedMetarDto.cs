@@ -2,6 +2,7 @@ namespace FlightFront.API.DTOs;
 
 public class ParsedMetarDto
 {
+    public string RawMetar { get; init; } = string.Empty;
     public string Icao { get; init; } = string.Empty;
     public DateTime? ObservationTime { get; init; }
     public WindDto? Wind { get; init; }

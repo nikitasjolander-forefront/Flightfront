@@ -11,13 +11,14 @@ public static class MetarMapper
 	{
 		return new ParsedMetarDto
 		{
+			RawMetar = parsedMetar.RawMetar,
 			Icao = parsedMetar.Icao,
 			ObservationTime = parsedMetar.ObservationTime,
 			Wind = parsedMetar.Wind?.ToDto(),
 			Visibility = parsedMetar.Visibility?.ToDto(),
-			Weather = parsedMetar.Weathers?.ToDto(),
-			Clouds = parsedMetar.Clouds?.ToDto(),
-			Temperature = parsedMetar.Temperature?.ToDto(),
+			Weather = parsedMetar.Weather?.ToDto(),
+            Clouds = parsedMetar.Clouds.Select(c => c.ToDto()).ToList(),
+            Temperature = parsedMetar.Temperature?.ToDto(),
 			// AirPressure = parsedMetar.AirPressure?.ToDto(),
 			ParseErrors = parsedMetar.ParseErrors
 		};

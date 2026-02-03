@@ -33,7 +33,7 @@ public class MetarTrimmingService
 		// Print String before removing whitespaces
 		Console.WriteLine($"METAR-string to trim: '{metar}'");
 
-
+        var substrings = metar.Split(Array.Empty<char>(), StringSplitOptions.RemoveEmptyEntries);
         // Remove leading METAR/SPECI tokens if present
         var startIndex = 0;
         if (substrings.Length > 0 &&
@@ -42,15 +42,6 @@ public class MetarTrimmingService
         {
             startIndex = 1;
         }
-
-		// Remove leading METAR/SPECI tokens if present
-		var startIndex = 0;
-		if (substrings.Length > 0 &&
-			(string.Equals(substrings[0], "METAR", StringComparison.OrdinalIgnoreCase) ||
-			 string.Equals(substrings[0], "SPECI", StringComparison.OrdinalIgnoreCase)))
-		{
-			startIndex = 1;
-		}
 
 		substrings = substrings.Skip(startIndex).ToArray();
 
@@ -64,7 +55,7 @@ public class MetarTrimmingService
 
 			Array.Resize(ref substrings, rmkIndex);  // Resize array to exclude RMK and everything after - remove rmkIndex and everything after
 		}
-
+        var tokens = new List<MetarToken>(substrings.Length);
         foreach (var str in substrings)
         {
             // Skip reserved keywords entirely (AUTO, COR, NIL)
@@ -94,7 +85,7 @@ public class MetarTrimmingService
 		if (WindRegex.IsMatch(token))
 			return TokenType.Wind;
 
-		if (VisibilityRegex.IsMatch(token) && token.EndsWith("SM", StringComparison.OrdinalIgnoreCase))
+		if (VisibilityRegex.IsMatch(token)) 
 			return TokenType.Visibility;
 
 	// OBS: kan behöva ändras eftersom visibility token kan innehålla endast siffrorockså
