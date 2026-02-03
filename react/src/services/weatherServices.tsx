@@ -1,15 +1,18 @@
 // import axios from "axios";
 
 export type Weather = {
-  location: string;
-  time: DayAndTime;
-  wind: Wind;
-  visibility: string | number;
-  temperature: number;
-  dewPoint: number;
-  qnh: number;
-  clouds: Clouds[];
-  metar: string;
+  metarRaw: string;
+  icao: string;
+  observationTime?: string;
+  wind?: Wind;
+  clouds?: Clouds[];
+  parseErrors?: string[];
+  location?: string;
+  visibility?: string | number;
+  temperature?: number;
+  dewPoint?: number;
+  qnh?: number;
+  weatherPhenomena?: WeatherPhenomena;
 };
 
 type Wind = {
@@ -46,6 +49,11 @@ const mockWeather: Weather = {
   icao: 'EHLE'
 };
 
+type WeatherPhenomena = {
+  snow?: "SN" | "-SN";
+  rain?: "RA" | "-RA";
+  fog?: "FG" | "BR";
+};
 
 export async function getWeatherByIcao(icao: string): Promise<Weather> {
   //const res = await axios.get<Weather>(`https://localhost:7168/api/Metar/${encodeURIComponent(icao)}`);

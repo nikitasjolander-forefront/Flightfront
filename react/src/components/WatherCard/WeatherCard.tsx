@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import "../../assets/weather-icons/css/weather-icons.min.css";
 import type { Weather } from "../../services/weatherServices";
-
+import { getWeatherIcon } from "../../utils/weatherIconMapper";
 // const location = "Arlanda";
 // const time = "13:00";
 // const wind = "strong";
@@ -40,6 +40,7 @@ function WeatherRow({ label, value }: WeatherRowProps) {
 }
 
 export function WeatherCard({weather}: WeatherProps) {
+  const weatherIconClass = getWeatherIcon(weather.weatherPhenomena);
   return (
     <>
       <Card variant="outlined" sx={{ p: 2 }}>
@@ -54,7 +55,7 @@ export function WeatherCard({weather}: WeatherProps) {
                 fontSize: 150,
               }}
             >
-              <i className="wi wi-rain"></i>
+              <i className={`wi ${weatherIconClass}`}></i>
             </Box>
             <Stack direction="column" width="100%">
                             {/*TODO: only show if exist*/}
