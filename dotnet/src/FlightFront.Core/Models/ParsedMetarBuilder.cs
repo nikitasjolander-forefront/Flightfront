@@ -7,7 +7,7 @@ public class ParsedMetarBuilder
     private DateTime? ObservationTime { get; set; }
     private Wind? Wind { get; set; }
 	  private Visibility? Visibility { get; set; }
-	  private List<Weather> Weathers { get; set; } = new();
+	  private List<Weather> Weather { get; set; } = new();
     private List<Clouds> Clouds { get; set; } = []; 
     private Temperature? Temperature { get; set; }
     // private AirPressure? AirPressure { get; set; }
@@ -63,10 +63,10 @@ public class ParsedMetarBuilder
       return this;
     }
 
-    public ParsedMetarBuilder SetWeather(Weather weather)
+    public ParsedMetarBuilder AddWeather(Weather weather)
     {
-      Weather = weather;
-      return this;
+      Weather.Add(weather);
+        return this;
     }
 
     public ParsedMetarBuilder AddClouds(Clouds clouds)  
