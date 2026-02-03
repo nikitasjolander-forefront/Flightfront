@@ -9,12 +9,6 @@ import {
 import "../../assets/weather-icons/css/weather-icons.min.css";
 import type { Weather } from "../../services/weatherServices";
 import { getWeatherIcon } from "../../utils/weatherIconMapper";
-// const location = "Arlanda";
-// const time = "13:00";
-// const wind = "strong";
-// const visibility = "semi";
-// const temperature = "23 deg";
-// const qnh = "wtf";
 
 interface WeatherRowProps {
   label: string;
@@ -58,12 +52,36 @@ export function WeatherCard({weather}: WeatherProps) {
               <i className={`wi ${weatherIconClass}`}></i>
             </Box>
             <Stack direction="column" width="100%">
-                            {/*TODO: only show if exist*/}
-              <WeatherRow label="Time" value={`${weather.time.day} ${weather.time.time}`} />
-              <WeatherRow label="Wind" value={`Direction ${weather.wind.direction} and speed ${weather.wind.speed} knot`}/>
-              <WeatherRow label="Visibility" value={weather.visibility} />
-              <WeatherRow label="Temperature" value={weather.temperature} />
-              <WeatherRow label="QNH" value={weather.qnh} />
+                {weather?.observationTime && (
+                <WeatherRow
+                  label="Observation Time"
+                  value={new Date(weather.observationTime).toLocaleString()}
+                />
+              )}
+              {weather?.wind?.direction != null && weather?.wind?.speed != null && (
+                <WeatherRow
+                  label="Wind"
+                  value={`${weather.wind.direction}° at ${weather.wind.speed} ${weather.wind.unit || 'KT'}${weather.wind.gust ? ` gusting ${weather.wind.gust}` : ''}`}
+                />
+              )}
+              {weather?.visibility != null && (
+                <WeatherRow label="Visibility" value={weather.visibility} />
+              )}
+              {weather?.temperature != null && (
+                <WeatherRow label="Temperature" value={`${weather.temperature}°C`} />
+              )}
+              {weather?.dewPoint != null && (
+                <WeatherRow label="Dew Point" value={`${weather.dewPoint}°C`} />
+              )}
+              {weather?.qnh != null && <WeatherRow label="QNH" value={`${weather.qnh} hPa`} />}
+              {weather?.clouds && weather.clouds.length > 0 && (
+                <WeatherRow 
+                  label="Clouds" 
+                  value={weather.clouds.map(c => 
+                    `${c.cloudCoverDescription || c.cloudCover} at ${c.cloudHeight}ft`
+                  ).join(', ')} 
+                />
+              )}
             </Stack>
           </Box>
         </CardContent>
