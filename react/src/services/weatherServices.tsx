@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export type Weather = {
-  metarRaw?: string;
+  metarRaw: string;
   icao: string;
   observationTime?: string;
   wind?: Wind;
@@ -12,7 +12,7 @@ export type Weather = {
   temperature?: number;
   dewPoint?: number;
   qnh?: number;
-  metar?: string;
+  weatherPhenomena?: WeatherPhenomena;
 };
 
 type Wind = {
@@ -30,6 +30,12 @@ type Clouds = {
   cloudCoverDescription?: string;
   cloudHeight?: number;
   modifier?: string | null;
+};
+
+type WeatherPhenomena = {
+  snow?: "SN" | "-SN";
+  rain?: "RA" | "-RA";
+  fog?: "FG" | "BR";
 };
 
 export async function getWeatherByIcao(icao: string): Promise<Weather> {

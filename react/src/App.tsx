@@ -33,7 +33,7 @@ function App() {
           icaoRaw={weatherMutation.data ? weatherMutation.data.icao : ""}
         />
         <MetarField
-          metarRaw={weatherMutation.data ? weatherMutation.data.metar : ""}
+          metarRaw={weatherMutation.data ? weatherMutation.data.metarRaw : ""}
           onSubmit={weatherMutation.mutate}
         />
 
