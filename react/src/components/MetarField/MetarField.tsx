@@ -8,8 +8,8 @@ interface MetarProps {
 }
 
 export function MetarField({ metarRaw, onSubmit }: MetarProps) {
-  const [metar, setMetar] = useState(metarRaw || "");
-
+  const [metar, setMetar] = useState(metarRaw);
+  
   useEffect(() => {
     setMetar(metarRaw)
   }, [metarRaw]);

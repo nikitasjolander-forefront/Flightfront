@@ -14,10 +14,10 @@ public class MetarParserService
         { TokenType.Wind, new WindParser() },
         { TokenType.Icao, new IcaoParser() },
         { TokenType.ObservationTime, new ObservationTimeParser()},
-       // { TokenType.Visibility, new VisibilityParser() },
-       // { TokenType.Weather, new WeatherParser() },
+        { TokenType.Visibility, new VisibilityParser() },
+        { TokenType.Weather, new WeatherParser() },
         { TokenType.Clouds, new CloudsParser() },
-       // { TokenType.Temperature, new TemperatureParser() }         
+        { TokenType.Temperature, new TemperatureParser() }         
        // { TokenType.AirPressure, new AirPressureParser() }
     };
 
