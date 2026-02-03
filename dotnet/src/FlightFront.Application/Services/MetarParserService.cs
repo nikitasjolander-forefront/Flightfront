@@ -14,16 +14,11 @@ public class MetarParserService
         { TokenType.Wind, new WindParser() },
         { TokenType.Icao, new IcaoParser() },
         { TokenType.ObservationTime, new ObservationTimeParser()},
-        { TokenType.Visibility, new VisibilityParser() },
-        { TokenType.Weather, new WeatherParser() },
-        { TokenType.Clouds, new CloudsParser() },
-        { TokenType.Temperature, new TemperatureParser(),
-        { TokenType.AirPressure, new AirPressureParser() }         
        // { TokenType.Visibility, new VisibilityParser() },
        // { TokenType.Weather, new WeatherParser() },
-       // { TokenType.Clouds, new CloudsParser() },
-       // { TokenType.Temperature, new TemperatureParser() }*/         
-        // { TokenType.AirPressure, new AirPressureParser() }
+        { TokenType.Clouds, new CloudsParser() },
+        { TokenType.Temperature, new TemperatureParser() }         
+       // { TokenType.AirPressure, new AirPressureParser() }
     };
 
     public MetarParserService(MetarTrimmingService trimmingService)
@@ -41,6 +36,9 @@ public class MetarParserService
         var tokens = _trimmingService.TrimAndCleanMetar(metarString);
 
         var parsedMetarBuilder = new ParsedMetarBuilder();
+
+         // Preserve the raw METAR string
+        parsedMetarBuilder.SetRawMetar(metarString);
 
         // Step 2: Process each token with its appropriate parser
         foreach (var token in tokens)

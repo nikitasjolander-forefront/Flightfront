@@ -52,7 +52,9 @@ public class MetarController : ControllerBase
             return NotFound($"No METAR found for {icaoCode}");
         }
 
-        return Ok(metar);
+        var parsedMetar = _metarParserService.Parse(metar);
+
+        return Ok(parsedMetar.ToDto());
     }
 
     private static bool IsValidIcaoCode(string icaoCode) =>
