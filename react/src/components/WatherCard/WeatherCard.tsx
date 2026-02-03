@@ -43,7 +43,7 @@ export function WeatherCard({weather}: WeatherProps) {
   return (
     <>
       <Card variant="outlined" sx={{ p: 2 }}>
-        <CardHeader title={`Weather at ${weather?.location || weather?.icao || 'Unknown'}`} />
+        <CardHeader title={`Weather at ${weather.location}`} />
         <CardContent>
           <Box sx={{ display: "flex", p: 0 }}>
             <Box
@@ -57,36 +57,12 @@ export function WeatherCard({weather}: WeatherProps) {
               <i className="wi wi-rain"></i>
             </Box>
             <Stack direction="column" width="100%">
-              {weather?.observationTime && (
-                <WeatherRow
-                  label="Observation Time"
-                  value={new Date(weather.observationTime).toLocaleString()}
-                />
-              )}
-              {weather?.wind?.direction != null && weather?.wind?.speed != null && (
-                <WeatherRow
-                  label="Wind"
-                  value={`${weather.wind.direction}° at ${weather.wind.speed} ${weather.wind.unit || 'KT'}${weather.wind.gust ? ` gusting ${weather.wind.gust}` : ''}`}
-                />
-              )}
-              {weather?.visibility != null && (
-                <WeatherRow label="Visibility" value={weather.visibility} />
-              )}
-              {weather?.temperature?.degree != null && (
-                <WeatherRow label="Temperature" value={`${weather.temperature.degree}°C`} />
-              )}
-              {weather?.temperature?.dewpoint != null && (
-                <WeatherRow label="Dew Point" value={`${weather.temperature.dewpoint}°C`} />
-              )}
-              {weather?.qnh != null && <WeatherRow label="QNH" value={`${weather.qnh} hPa`} />}
-              {weather?.clouds && weather.clouds.length > 0 && (
-                <WeatherRow 
-                  label="Clouds" 
-                  value={weather.clouds.map(c => 
-                    `${c.cloudCoverDescription || c.cloudCover} at ${c.cloudHeight}ft`
-                  ).join(', ')} 
-                />
-              )}
+                            {/*TODO: only show if exist*/}
+              <WeatherRow label="Time" value={`${weather.time.day} ${weather.time.time}`} />
+              <WeatherRow label="Wind" value={`Direction ${weather.wind.direction} and speed ${weather.wind.speed} knot`}/>
+              <WeatherRow label="Visibility" value={weather.visibility} />
+              <WeatherRow label="Temperature" value={weather.temperature} />
+              <WeatherRow label="QNH" value={weather.qnh} />
             </Stack>
           </Box>
         </CardContent>
